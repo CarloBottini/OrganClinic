@@ -1,5 +1,6 @@
-package OrganClinicJDBC;
+package OrganClinicPOJOs;
 
-public enum TreatmentType {
+public enum TypeTreatment {
 	Dietary, Pharmacological, MedicalProcedure, Rehabilitation
+
 }

@@ -1,7 +1,8 @@
-package OrganClinicJDBC;
+package OrganClinicPOJOs;
 
 public class Nurse {
-	private int id;
+
+	private Integer id;
 	private String name;
 	private Boolean availability;
 }
