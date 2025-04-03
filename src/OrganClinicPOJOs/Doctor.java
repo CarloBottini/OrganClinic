@@ -8,7 +8,7 @@ public class Doctor {
 	private Integer id;
 	private String name;
 	private Date dob;
-	private TypeGender gender;
+	private String gender;
 	private String email;
 	private Integer telephone;
 

@@ -1,4 +1,5 @@
 package OrganClinicUI;
+import OrganClinicJDBC.*;
 
 public class menu {
 

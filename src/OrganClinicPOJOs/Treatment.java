@@ -6,6 +6,6 @@ public class Treatment {
 	
 	private Integer id;
 	private String name;
-	private TypeTreatment treatmentType;
+	private String treatmentType;
 	private Integer duration;
 }
