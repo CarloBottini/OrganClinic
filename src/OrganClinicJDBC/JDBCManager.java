@@ -31,7 +31,7 @@ public class JDBCManager {
 			System.out.print("Libraries not loaded");
 		}
 	
-	}//	public JDBCManager() 
+	}
 	
 private void createTables() {
 		
