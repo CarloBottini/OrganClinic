@@ -2,6 +2,7 @@ package OrganClinicPOJOs;
 
 import java.io.Serializable;
 import java.sql.Date; //Date from sql so it will be correct later
+import java.util.Objects;
 
 public class Operation implements Serializable{
 	
@@ -32,6 +33,71 @@ public class Operation implements Serializable{
 		this.patientId = patientId;
 		this.treatmentId = treatmentId;
 		this.doctorId = doctorId;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(Boolean isDone) {
+		this.isDone = isDone;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Integer getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(Integer patientId) {
+		this.patientId = patientId;
+	}
+
+	public Integer getTreatmentId() {
+		return treatmentId;
+	}
+
+	public void setTreatmentId(Integer treatmentId) {
+		this.treatmentId = treatmentId;
+	}
+
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Operation other = (Operation) obj;
+		return Objects.equals(id, other.id);
 	}
 	
 	
