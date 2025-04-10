@@ -1,10 +1,14 @@
 package OrganClinicPOJOs;
 
+import java.io.Serializable;
 import java.sql.Date; //it will helps us later
 
 
-public class Patient {
+public class Patient implements Serializable{
 
+
+	private static final long serialVersionUID = 448543727153060322L;
+	
 	private Integer id;
 	private String name;
 	private Date dob;
