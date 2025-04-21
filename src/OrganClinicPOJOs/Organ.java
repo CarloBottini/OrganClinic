@@ -81,6 +81,11 @@ public class Organ implements Serializable {
 		Organ other = (Organ) obj;
 		return Objects.equals(id, other.id);
 	}
+	@Override
+	public String toString() {
+		return "Organ [id=" + id + ", gender=" + gender + ", typeOrgan=" + typeOrgan + ", size=" + size + ", quality="
+				+ quality + ", bloodType=" + bloodType + "]";
+	}
 	
 	
 	

@@ -54,6 +54,10 @@ public class Nurse implements Serializable {
 		Nurse other = (Nurse) obj;
 		return Objects.equals(id, other.id);
 	}
+	@Override
+	public String toString() {
+		return "Nurse [id=" + id + ", name=" + name + ", availability=" + availability + "]";
+	}
 	
 	
 }

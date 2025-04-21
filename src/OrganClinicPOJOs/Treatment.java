@@ -63,5 +63,13 @@ public class Treatment implements Serializable{
 		Treatment other = (Treatment) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	@Override
+	public String toString() {
+		return "Treatment [id=" + id + ", name=" + name + ", treatmentType=" + treatmentType + ", duration=" + duration
+				+ "]";
+	}
 		
+	
+	
 }

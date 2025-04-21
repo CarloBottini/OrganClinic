@@ -99,6 +99,13 @@ public class Operation implements Serializable{
 		Operation other = (Operation) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Operation [id=" + id + ", isDone=" + isDone + ", date=" + date + ", patientId=" + patientId
+				+ ", treatmentId=" + treatmentId + ", doctorId=" + doctorId + "]";
+	}
+	
 	
 	
 }
