@@ -14,7 +14,7 @@ public class Patient implements Serializable{
 	private String name;
 	private Date dob;
 	private String gender;
-	private String organ_failing; //TODO Organ or typeOrgan??? i think it is TypeOrgan
+	private String organFailure; 
 	private String email;
 	private Integer telephone;
 	private String bloodType;
@@ -28,14 +28,14 @@ public class Patient implements Serializable{
 	 * @param telephone
 	 * @param bloodType
 	 */
-	public Patient(Integer id, String name, Date dob, String gender, String organ_failing, String email,
+	public Patient(Integer id, String name, Date dob, String gender, String organFailure, String email,
 			Integer telephone, String bloodType) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.dob = dob;
 		this.gender = gender;
-		this.organ_failing = organ_failing;
+		this.organFailure = organFailure;
 		this.email = email;
 		this.telephone = telephone;
 		this.bloodType = bloodType;
@@ -64,11 +64,11 @@ public class Patient implements Serializable{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getOrgan_failing() {
-		return organ_failing;
+	public String getOrganFailure() {
+		return organFailure;
 	}
-	public void setOrgan_failing(String organ_failing) {
-		this.organ_failing = organ_failing;
+	public void setOrganFailure(String organFailure) {
+		this.organFailure = organFailure;
 	}
 	public String getEmail() {
 		return email;
@@ -105,8 +105,8 @@ public class Patient implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Patient [id=" + id + ", name=" + name + ", dob=" + dob + ", gender=" + gender + ", organ_failing="
-				+ organ_failing + ", email=" + email + ", telephone=" + telephone + ", bloodType=" + bloodType + "]";
+		return "Patient [id=" + id + ", name=" + name + ", dob=" + dob + ", gender=" + gender + ", organFailure="
+				+ organFailure + ", email=" + email + ", telephone=" + telephone + ", bloodType=" + bloodType + "]";
 	}
 	
 	

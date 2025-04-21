@@ -13,14 +13,8 @@ public class Organ implements Serializable {
 	private String size;
 	private Float quality;
 	private String bloodType;
-	/**
-	 * @param id
-	 * @param gender
-	 * @param typeOrgan
-	 * @param size
-	 * @param quality
-	 * @param bloodType
-	 */
+	
+	
 	public Organ(Integer id, String gender, String typeOrgan, String size, Float quality, String bloodType) {
 		super();
 		this.id = id;
