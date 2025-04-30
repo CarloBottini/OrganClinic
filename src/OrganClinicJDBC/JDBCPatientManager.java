@@ -159,6 +159,26 @@ public Patient getPatientByID(Integer id) {
 	 */
 	
 	
+	//in the future this will be the user email=username
+	
+	public Patient getPatientByEmail(String email) {
+		Patient patient= null;
+		try {
+			String sql = "SELECT * FROM patient WHERE email = ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, email);
+			ResultSet rs =prep.executeQuery();
+			if(rs.next()) {
+				patient= new Patient (rs.getInt("id"), rs.getString("name"), rs.getDate("dob"),rs.getString("gender"), rs.getString("organFailure"),rs.getString("email"),rs.getInt("telephone"), rs.getString("bloodType"));
+			}
+			prep.close();
+			rs.close();
+		}catch(Exception e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return patient;
+	}
 	
 	
 }
