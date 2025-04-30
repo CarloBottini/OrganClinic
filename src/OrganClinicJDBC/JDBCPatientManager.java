@@ -24,16 +24,6 @@ public class JDBCPatientManager implements PatientManager{
 	//TODO METODOS ADD PATIENT DELETE NAD MODIFY PATIENT
 	//TODO METODOS GETPATIENTBYid and getpatientbyname
 	
-	/*
-	 * 	private Integer id;
-	private String name;
-	private Date dob;
-	private String gender;
-	private String organFailure; 
-	private String email;
-	private Integer telephone;
-	private String bloodType;
-	 */
 	
 	//TODO We will need to put Override wehn the interfaces are done
 	
@@ -60,18 +50,6 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	
-	
-
-	/*
-	 * 	private Integer id;
-	private String name;
-	private Date dob;
-	private String gender;
-	private String organFailure; 
-	private String email;
-	private Integer telephone;
-	private String bloodType;
-	 */
 	
 	public void modifyPatient(Patient p) {
 		try {
@@ -114,24 +92,7 @@ public class JDBCPatientManager implements PatientManager{
 		}
 	}
 	
-	/*
-	 * @Override
-public Patient getPatientByID(Integer id) {
 	
-	try {
-		String sql = "SELECT * FROM patient WHERE id = " + id;
-		Statement st= c.createStatement();
-		ResultSet rs = st.executeQuery(sql);
-		rs.next();
-		Patient p = new Patient (rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getDate("dateOfBirth"), rs.getString("gender"));
-		return p;
-	} catch (SQLException e) {
-		System.out.println("Error in the database");
-		e.printStackTrace();
-	}
-	return null;
-}
-	 */
 	
 	public Patient getPatientByID(Integer id) {
 		try {
@@ -147,16 +108,7 @@ public Patient getPatientByID(Integer id) {
 		}
 		return null;
 	}
-	/*
-	 * 	private Integer id;
-	private String name;
-	private Date dob;
-	private String gender;
-	private String organFailure; 
-	private String email;
-	private Integer telephone;
-	private String bloodType;
-	 */
+	
 	
 	
 	//in the future this will be the user email=username
