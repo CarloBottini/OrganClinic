@@ -117,10 +117,10 @@ private void createTables() {
 			
 			
 			
-			// insert default values to the tables
+// insert default values to the tables
 			
 			
-			//insert the information of the blood
+//insert the information of the blood
 			sql = "INSERT INTO Blood (type) VALUES ('Negative_0')";
 			stmt.executeUpdate(sql);
 			sql = "INSERT INTO Blood (type) VALUES ('Positive_0')";
@@ -139,28 +139,28 @@ private void createTables() {
 			stmt.executeUpdate(sql);
 
 			
-			//We insert the patients information
+//We insert the patients information
 			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('John Doe', '2000-10-31', 'M', 'Liver', 'JD@hotmail.com', '693847561', 'Positive_0')";
 			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "
+			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('Aitor Menta', '2002-11-01', 'M', 'Kidney', 'stormbreaker@gmail.com', '273485960', 'Positive_A')";
 			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "
+			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('Abraham Mateo', '1995-10-21', 'M', 'Heart', 'lincon@gmail.com', '172837465', 'Negative_B')";
 			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "
+			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('Freddy Mercury', '1990-08-11', 'M', 'Pancreas', 'Venus@gmail.com', '909876543', 'Positive_AB')";
 			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "
+			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('Giovanni Lo Celso', '1980-07-23', 'M', 'Kidney', 'argentino123@hotmail.com', '123456543', 'Positive_0')";
 			stmt.executeUpdate(sql);
-			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "
+			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('Sara Infante', '2003-10-31', 'F', 'Lung', 'InfanteSa@gmail.com', '982514209', 'Negative_A')";
 			stmt.executeUpdate(sql);
 
 		
-			//insert the doctor information
+//insert the doctor information
 			sql = "INSERT INTO Doctor (name, dob, gender, email, telephone) "
 			    + "VALUES('Sandy March', '1985-06-19', 'F', 'SandyMarch@gmail.com', '345271623')";
 			stmt.executeUpdate(sql);
@@ -181,7 +181,7 @@ private void createTables() {
 			stmt.executeUpdate(sql);
 
 		
-			//insert the values of the nurse
+//insert the values of the nurse
 			sql = "INSERT INTO Nurse (name, availability) VALUES ('Ferran Torres', 1)";
 			stmt.executeUpdate(sql);
 			sql = "INSERT INTO Nurse (name, availability) VALUES ('Luis Garcia', 1)";
@@ -213,6 +213,121 @@ private void createTables() {
 			sql = "INSERT INTO Nurse (name, availability) VALUES ('Luis Rubio', 1)";
 			stmt.executeUpdate(sql);
 
+			
+//insert the values of Organs
+			sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) "
+			    + "VALUES('M', 'Heart', 'CHILD', 87, 'Positive_A')";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) "
+			    + "VALUES('F', 'Kidney', 'ADULT', 85, 'Negative_B')";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) "
+			    + "VALUES('M', 'Liver', 'CHILD', 89, 'Positive_AB')";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) "
+			    + "VALUES('F', 'Lung', 'ADULT', 92, 'Positive_0')";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) "
+			    + "VALUES('M', 'Pancreas', 'CHILD', 86, 'Positive_B')";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) "
+			    + "VALUES('F', 'Heart', 'ADULT', 90, 'Negative_AB')";
+			stmt.executeUpdate(sql);
+
+			
+//inserts the values for treatments
+			sql = "INSERT INTO Treatment (name, type, duration) "
+			    + "VALUES('Anticoagulants', 'Pharmacological', 10)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Treatment (name, type, duration) "
+			    + "VALUES('Nutritional therapy', 'Dietary', 14)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Treatment (name, type, duration) "
+			    + "VALUES('Radiation therapy', 'Medical procedure', 20)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Treatment (name, type, duration) "
+			    + "VALUES('Speech therapy', 'Rehabilitation', 6)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Treatment (name, type, duration) "
+			    + "VALUES('Physiotherapy', 'Rehabilitation', 12)";
+			stmt.executeUpdate(sql);
+
+//inserts the values of the Operation
+			
+			sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) "
+			    + "VALUES(0, '2025-10-15', 2, 9, 3)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) "
+			    + "VALUES(0, '2025-11-20', 1, 10, 2)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) "
+			    + "VALUES(1, '2025-01-12', 6, 11, 5)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) "
+			    + "VALUES(1, '2025-02-25', 4, 12, 1)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) "
+			    + "VALUES(0, '2025-04-30', 3, 13, 4)";
+			stmt.executeUpdate(sql);
+
+//inserts the values of the Compatible table		
+		
+			sql = "INSERT INTO Compatible (patient_id, organ_id, percentCompatibility, bloodCompatible) "
+			    + "VALUES(2, 13, 88, 1)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Compatible (patient_id, organ_id, percentCompatibility, bloodCompatible) "
+			    + "VALUES(1, 14, 70, 0)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Compatible (patient_id, organ_id, percentCompatibility, bloodCompatible) "
+			    + "VALUES(6, 15, 94, 1)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Compatible (patient_id, organ_id, percentCompatibility, bloodCompatible) "
+			    + "VALUES(5, 16, 75, 1)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Compatible (patient_id, organ_id, percentCompatibility, bloodCompatible) "
+			    + "VALUES(3, 17, 60, 0)";
+			stmt.executeUpdate(sql);
+
+//inserts the values of the Has table
+			sql = "INSERT INTO Has (nurse_id, operation_id) "
+			    + "VALUES(3, 7)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Has (nurse_id, operation_id) "
+			    + "VALUES(6, 8)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Has (nurse_id, operation_id) "
+			    + "VALUES(9, 9)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Has (nurse_id, operation_id) "
+			    + "VALUES(11, 10)";
+			stmt.executeUpdate(sql);
+
+			sql = "INSERT INTO Has (nurse_id, operation_id) "
+			    + "VALUES(12, 11)";
+			stmt.executeUpdate(sql);
+
+	
+		
 			
 			System.out.println("Tables created and default values inserted");
 
