@@ -42,6 +42,6 @@ public class JDBCTreatmentManager implements TreatmentManager{
 		}
 		
 		
-	}
+	
 	
 }
