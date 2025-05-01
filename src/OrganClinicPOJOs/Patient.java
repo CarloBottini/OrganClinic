@@ -18,16 +18,8 @@ public class Patient implements Serializable{
 	private String email;
 	private Integer telephone;
 	private String bloodType;
-	/**
-	 * @param id
-	 * @param name
-	 * @param dob
-	 * @param gender
-	 * @param organ_failing
-	 * @param email
-	 * @param telephone
-	 * @param bloodType
-	 */
+	
+	
 	public Patient(Integer id, String name, Date dob, String gender, String organFailure, String email,
 			Integer telephone, String bloodType) {
 		super();

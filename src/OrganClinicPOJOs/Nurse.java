@@ -10,11 +10,7 @@ public class Nurse implements Serializable {
 	private Integer id;
 	private String name;
 	private Boolean availability;
-	/**
-	 * @param id
-	 * @param name
-	 * @param availability
-	 */
+	
 	public Nurse(Integer id, String name, Boolean availability) {
 		super();
 		this.id = id;

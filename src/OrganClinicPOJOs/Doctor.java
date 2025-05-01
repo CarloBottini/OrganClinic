@@ -8,9 +8,7 @@ import java.io.Serializable;
 public class Doctor implements Serializable{
 	
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -1687897604850163624L;
 	
 	private Integer id;
@@ -20,14 +18,7 @@ public class Doctor implements Serializable{
 	private String email;
 	private Integer telephone;
 	
-	/**
-	 * @param id
-	 * @param name
-	 * @param dob
-	 * @param gender
-	 * @param email
-	 * @param telephone
-	 */
+	
 	public Doctor(Integer id, String name, Date dob, String gender, String email, Integer telephone) {
 		super();
 		this.id = id;
