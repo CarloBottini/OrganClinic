@@ -31,7 +31,7 @@ public class JDBCDoctorManager implements DoctorManager{
 			while(rs.next()){
 				Integer id = rs.getInt("id");
 				String name= rs.getString("name");
-				Date dob= rs.getDate("date");
+				Date dob= rs.getDate("dob");
 				String gender = rs.getString("gender");
 				String email = rs.getString("email");
 				Integer telephone = rs.getInt("telephone");

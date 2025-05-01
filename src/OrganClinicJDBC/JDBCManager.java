@@ -54,10 +54,10 @@ private void createTables() {
 				+"	name TEXT NOT NULL,"
 				+"	dob DATE NOT NULL,"
 				+"	gender TEXT CHECK (gender IN ('M', 'F')), "
-				+"	organ_Failure TEXT NOT NULL,"
+				+"	organFailure TEXT NOT NULL,"
 				+"	email TEXT UNIQUE ,"
 				+"	telephone TEXT UNIQUE,"
-				+"	blood_Type TEXT NOT NULL REFERENCES Blood(type))";
+				+"	bloodType TEXT NOT NULL REFERENCES Blood(type))";
 			stmt.executeUpdate(sql);
 			
 		
@@ -80,7 +80,7 @@ private void createTables() {
 				+ "	type TEXT NOT NULL,"
 				+ "	size TEXT CHECK (size IN ('ADULT', 'CHILD')),"
 				+ "	quality INTEGER NOT NULL CHECK (quality BETWEEN 0 AND 100),"
-				+ "	blood_Type TEXT NOT NULL REFERENCES Blood(type))";
+				+ "	bloodType TEXT NOT NULL REFERENCES Blood(type))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE Treatment ("
@@ -93,8 +93,8 @@ private void createTables() {
 			sql = "CREATE TABLE Operation ("
 				+ "	id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "	isDone BOOLEAN NOT NULL,"
-				+ "	dob DATE NOT NULL,"
-				+ "	operatedPatient INTEGER NOT NULL REFERENCES Patient(id),"
+				+ "	date DATE NOT NULL,"
+				+ "	patient_id INTEGER NOT NULL REFERENCES Patient(id),"
 				+ "	treatment_id INTEGER NOT NULL REFERENCES Treatment(id),"
 				+ "	doctor_id INTEGER NOT NULL REFERENCES Doctor(id))";
 			stmt.executeUpdate(sql);
@@ -102,8 +102,8 @@ private void createTables() {
 			sql = "CREATE TABLE Compatible ("
 				+ "	patient_id INTEGER NOT NULL REFERENCES Patient(id),"
 				+ "	organ_id INTEGER NOT NULL REFERENCES Organ(id),"
-				+ "	percent_compatibility INTEGER NOT NULL CHECK (percent_compatibility BETWEEN 0 AND 100),"
-				+ "	blood_compatible BOOLEAN NOT NULL,"
+				+ "	percentCompatibility INTEGER NOT NULL CHECK (percentCompatibility BETWEEN 0 AND 100),"
+				+ "	bloodCompatible BOOLEAN NOT NULL,"
 				+ "	PRIMARY KEY (patient_id, organ_id))";
 			stmt.executeUpdate(sql);
 
@@ -140,7 +140,7 @@ private void createTables() {
 
 			
 			//We insert the patients information
-			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "
+			sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) "
 			    + "VALUES('John Doe', '2000-10-31', 'M', 'Liver', 'JD@hotmail.com', '693847561', 'Positive_0')";
 			stmt.executeUpdate(sql);
 			sql = "INSERT INTO Patient (name, dob, gender, organ_Failure, email, telephone, blood_Type) "

@@ -9,14 +9,14 @@ public class Treatment implements Serializable{
 	
 	private Integer id;
 	private String name;
-	private String treatmentType;
+	private String type;
 	private Integer duration;
 	
-	public Treatment(Integer id, String name, String treatmentType, Integer duration) {
+	public Treatment(Integer id, String name, String type, Integer duration) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.treatmentType = treatmentType;
+		this.type = type;
 		this.duration = duration;
 	}
 	public Integer getId() {
@@ -31,11 +31,11 @@ public class Treatment implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getTreatmentType() {
-		return treatmentType;
+	public String getType() {
+		return type;
 	}
-	public void setTreatmentType(String treatmentType) {
-		this.treatmentType = treatmentType;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public Integer getDuration() {
 		return duration;
@@ -61,7 +61,7 @@ public class Treatment implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Treatment [id=" + id + ", name=" + name + ", treatmentType=" + treatmentType + ", duration=" + duration
+		return "Treatment [id=" + id + ", name=" + name + ", type=" + type + ", duration=" + duration
 				+ "]";
 	}
 		

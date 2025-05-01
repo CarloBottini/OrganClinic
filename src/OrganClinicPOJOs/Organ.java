@@ -9,17 +9,17 @@ public class Organ implements Serializable {
 
 	private Integer id;
 	private String gender;
-	private String typeOrgan;
+	private String type;
 	private String size;
 	private Float quality;
 	private String bloodType;
 	
 	
-	public Organ(Integer id, String gender, String typeOrgan, String size, Float quality, String bloodType) {
+	public Organ(Integer id, String gender, String type, String size, Float quality, String bloodType) {
 		super();
 		this.id = id;
 		this.gender = gender;
-		this.typeOrgan = typeOrgan;
+		this.type = type;
 		this.size = size;
 		this.quality = quality;
 		this.bloodType = bloodType;
@@ -36,11 +36,11 @@ public class Organ implements Serializable {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getTypeOrgan() {
-		return typeOrgan;
+	public String getType() {
+		return type;
 	}
-	public void setTypeOrgan(String typeOrgan) {
-		this.typeOrgan = typeOrgan;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getSize() {
 		return size;
@@ -77,7 +77,7 @@ public class Organ implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Organ [id=" + id + ", gender=" + gender + ", typeOrgan=" + typeOrgan + ", size=" + size + ", quality="
+		return "Organ [id=" + id + ", gender=" + gender + ", type=" + type + ", size=" + size + ", quality="
 				+ quality + ", bloodType=" + bloodType + "]";
 	}
 	

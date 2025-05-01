@@ -11,20 +11,20 @@ public class Operation implements Serializable{
 	private Integer id;
 	private Boolean isDone;
 	private Date date;
-	private Integer operatedPatient;
-	private Integer treatmentId;
-	private Integer doctorId;
+	private Integer patient_id;
+	private Integer treatment_id;
+	private Integer doctor_id;
 	//TODO correct this so it will have lists
 	
 	
-	public Operation(Integer id, Boolean isDone, Date date, Integer patientId, Integer treatmentId, Integer doctorId) {
+	public Operation(Integer id, Boolean isDone, Date date, Integer patient_id, Integer treatment_id, Integer doctor_id) {
 		super();
 		this.id = id;
 		this.isDone = isDone;
 		this.date = date;
-		this.patientId = patientId;
-		this.treatmentId = treatmentId;
-		this.doctorId = doctorId;
+		this.patient_id = patient_id;
+		this.treatment_id = treatment_id;
+		this.doctor_id = doctor_id;
 	}
 
 	public Integer getId() {
@@ -51,28 +51,28 @@ public class Operation implements Serializable{
 		this.date = date;
 	}
 
-	public Integer getPatientId() {
-		return patientId;
+	public Integer getPatient_id() {
+		return patient_id;
 	}
 
-	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
+	public void setPatient_id(Integer patient_id) {
+		this.patient_id = patient_id;
 	}
 
-	public Integer getTreatmentId() {
-		return treatmentId;
+	public Integer getTreatment_id() {
+		return treatment_id;
 	}
 
-	public void setTreatmentId(Integer treatmentId) {
-		this.treatmentId = treatmentId;
+	public void setTreatment_id(Integer treatment_id) {
+		this.treatment_id = treatment_id;
 	}
 
-	public Integer getDoctorId() {
-		return doctorId;
+	public Integer getDoctor_id() {
+		return doctor_id;
 	}
 
-	public void setDoctorId(Integer doctorId) {
-		this.doctorId = doctorId;
+	public void setDoctor_id(Integer doctor_id) {
+		this.doctor_id = doctor_id;
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public class Operation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Operation [id=" + id + ", isDone=" + isDone + ", date=" + date + ", patientId=" + patientId
-				+ ", treatmentId=" + treatmentId + ", doctorId=" + doctorId + "]";
+		return "Operation [id=" + id + ", isDone=" + isDone + ", date=" + date + ", patient_id=" + patient_id
+				+ ", treatment_id=" + treatment_id + ", doctor_id=" + doctor_id + "]";
 	}
 	
 	
