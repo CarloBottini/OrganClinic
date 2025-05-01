@@ -17,7 +17,7 @@ public class JDBCOrganManager implements OrganManager {
 	
 	public void addOrgan(Organ organ) {
 		try {//it is not necessary to put the id, because it is autoincremented
-			String sql = "INSERT INTO Patient (gender, typeOrgan, size, quality, bloodType) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Organ (gender, typeOrgan, size, quality, bloodType) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, organ.getGender());	
 			prep.setString(2, organ.getSize());

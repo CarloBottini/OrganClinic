@@ -11,7 +11,7 @@ public class Operation implements Serializable{
 	private Integer id;
 	private Boolean isDone;
 	private Date date;
-	private Integer patientId;
+	private Integer operatedPatient;
 	private Integer treatmentId;
 	private Integer doctorId;
 	//TODO correct this so it will have lists
