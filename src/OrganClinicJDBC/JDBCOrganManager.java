@@ -17,12 +17,13 @@ public class JDBCOrganManager implements OrganManager {
 	
 	public void addOrgan(Organ organ) {
 		try {//it is not necessary to put the id, because it is autoincremented
-			String sql = "INSERT INTO Organ (gender, typeOrgan, size, quality, bloodType) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, organ.getGender());	
-			prep.setString(2, organ.getSize());
-			prep.setFloat(3, organ.getQuality());
-			prep.setString(4, organ.getBloodType());
+			prep.setString(2, organ.getType());
+			prep.setString(3, organ.getSize());
+			prep.setFloat(4, organ.getQuality());
+			prep.setString(5, organ.getBloodType());
 			
 			prep.executeUpdate();
 			prep.close();
@@ -32,14 +33,6 @@ public class JDBCOrganManager implements OrganManager {
 		}	
 	}
 	
-	/*
-	 * private Integer id;
-	private String gender;
-	private String typeOrgan;
-	private String size;
-	private Float quality;
-	private String bloodType;
 	
-	 */
 	
 }

@@ -29,7 +29,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	public void addPatient(Patient p) {
 		try {//it is not necessary to put the id, because it is autoincremented
-			String sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) VALUES (?, ?, ?, ?, ?,?,?)";
+			String sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, p.getName());	

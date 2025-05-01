@@ -48,7 +48,7 @@ public class JDBCDoctorManager implements DoctorManager{
 	
 	
 	public void addDoctor (Doctor doc) {
-		try {//it is not  necessary to put the id beacause it is autoincremented
+		try {//it is not  necessary to put the id because it is autoincremented
 			String template = "INSERT INTO Doctor (name, dob, gender, email, telephone) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(template);
 			prep.setString(1, doc.getName());

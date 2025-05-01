@@ -26,11 +26,11 @@ public class JDBCTreatmentManager implements TreatmentManager{
 			{
 				Integer id = rs.getInt("id");
 				String name= rs.getString("name");
-				String treatmentType = rs.getString("treatmentType");
+				String type = rs.getString("type");
 				Integer duration = rs.getInt("duration");
 				
 				
-				Treatment t= new Treatment(id,name,treatmentType,duration);
+				Treatment t= new Treatment(id,name,type,duration);
 				allTreatments.add(t);
 			}
 			rs.close();
