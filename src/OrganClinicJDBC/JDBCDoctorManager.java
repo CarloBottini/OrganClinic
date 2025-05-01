@@ -26,7 +26,7 @@ public class JDBCDoctorManager implements DoctorManager{
 		List<Doctor> doctors = new ArrayList<Doctor>();
 		try {
 			Statement stmt = manager.getConnection().createStatement();
-			String sql = "Select * FROM doctors";
+			String sql = "Select * FROM Doctor";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
 				Integer id = rs.getInt("id");
@@ -49,7 +49,7 @@ public class JDBCDoctorManager implements DoctorManager{
 	
 	public void addDoctor (Doctor doc) {
 		try {//it is not  necessary to put the id beacause it is autoincremented
-			String template = "INSERT INTO doctor (name, dob, gender, email, telephone) VALUES (?, ?, ?, ?, ?)";
+			String template = "INSERT INTO Doctor (name, dob, gender, email, telephone) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(template);
 			prep.setString(1, doc.getName());
 			prep.setDate(2, doc.getDob());
@@ -67,7 +67,7 @@ public class JDBCDoctorManager implements DoctorManager{
 	
 	public Doctor getDoctorByID(Integer id) {
 		try {
-			String sql = "SELECT * FROM doctor WHERE id = " + id;
+			String sql = "SELECT * FROM Doctor WHERE id = " + id;
 			Statement st = manager.getConnection().createStatement();
 			ResultSet rs= st.executeQuery(sql);
 			rs.next();
@@ -81,29 +81,11 @@ public class JDBCDoctorManager implements DoctorManager{
 	}
 	
 	
-	/*
-	 * public Doctor getDoctorByusername(String username) {
-		try {
-			String sql = "SELECT * FROM doctor WHERE username = ?";
-			PreparedStatement p= c.prepareStatement(sql);
-			p.setString(1, username);
-			ResultSet rs = p.executeQuery();
-			rs.next();
-			Doctor d = new Doctor (rs.getInt("id"), rs.getString("name"), rs.getString("surname"));
-			p.close();
-			return d;
-		} catch (SQLException e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}
-		return null;
-	}
-	 */
 	
 	
 	public Doctor getDoctorByEmail(String email) {
 		try {
-			String sql = "SELECT * FROM doctor WHERE username = ?";
+			String sql = "SELECT * FROM Doctor WHERE username = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1,email);
 			ResultSet rs= prep.executeQuery();

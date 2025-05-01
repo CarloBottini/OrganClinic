@@ -29,7 +29,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	public void addPatient(Patient p) {
 		try {//it is not necessary to put the id, because it is autoincremented
-			String sql = "INSERT INTO patient (name, dob, gender, organFailure, email, telephone, bloodtype) VALUES (?, ?, ?, ?, ?,?,?)";
+			String sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) VALUES (?, ?, ?, ?, ?,?,?)";
 
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, p.getName());	
@@ -53,7 +53,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	public void modifyPatient(Patient p) {
 		try {
-			String query = "UPDATE patient SET name= ?, dob= ?, gender= ?, organFailure= ?, email= ?, telephone= ?, bloodType= ? WHERE id=?";
+			String query = "UPDATE Patient SET name= ?, dob= ?, gender= ?, organFailure= ?, email= ?, telephone= ?, bloodType= ? WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
 			prep.setString(1,p.getName());
 			prep.setDate(2, p.getDob());
@@ -76,7 +76,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	public void deletePatient(Integer id) {
 		try {
-			String st= "DELETE FROM patient WHERE id= ?";
+			String st= "DELETE FROM Patient WHERE id= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(st);
 			prep.setInt(1, id);
 			int rowsAffected = prep.executeUpdate();
@@ -96,7 +96,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	public Patient getPatientByID(Integer id) {
 		try {
-			String sql = "SELECT * FROM patient WHERE id = " + id;
+			String sql = "SELECT * FROM Patient WHERE id = " + id;
 			Statement st = manager.getConnection().createStatement();
 			ResultSet rs= st.executeQuery(sql);
 			rs.next();
@@ -116,7 +116,7 @@ public class JDBCPatientManager implements PatientManager{
 	public Patient getPatientByEmail(String email) {
 		Patient patient= null;
 		try {
-			String sql = "SELECT * FROM patient WHERE email = ?";
+			String sql = "SELECT * FROM Patient WHERE email = ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, email);
 			ResultSet rs =prep.executeQuery();

@@ -11,12 +11,7 @@ public class Treatment implements Serializable{
 	private String name;
 	private String treatmentType;
 	private Integer duration;
-	/**
-	 * @param id
-	 * @param name
-	 * @param treatmentType
-	 * @param duration
-	 */
+	
 	public Treatment(Integer id, String name, String treatmentType, Integer duration) {
 		super();
 		this.id = id;
