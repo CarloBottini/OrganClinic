@@ -1,6 +1,8 @@
 package OrganClinicJDBC;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import OrganClinicINTERFACEs.OrganManager;
 import OrganClinicPOJOs.Organ;
@@ -33,6 +35,64 @@ public class JDBCOrganManager implements OrganManager {
 			e.printStackTrace();
 		}	
 	}
+	
+	public void modifyOrgan(Organ o) {
+		try {
+			String query = "UPDATE Organ SET id= ?, gender= ?, type= ?, size= ?, quality= ?, bloodType= ? WHERE id=?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(query);
+			prep.setInt(1, o.getId());
+			prep.setString(2, o.getGender());
+			prep.setString(3, o.getType());
+	        prep.setString(4, o.getSize()); 
+	        prep.setFloat(5, o.getQuality());
+	        prep.setString(6, o.getBloodType());
+	        prep.executeUpdate();
+	        prep.close();
+	        System.out.println("Organ with ID " + o.getId() + " updated successfully.");
+	        
+		}catch(Exception e){
+	        System.out.println("Error in the database");
+			e.printStackTrace();
+			}	
+	}
+	
+	public void deleteOrgan(Integer id) {
+		try {
+			String st= "DELETE FROM Organ WHERE id= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(st);
+			prep.setInt(1, id);
+			int rowsAffected = prep.executeUpdate();
+			if (rowsAffected>0) {
+		        System.out.println("Deleted successfully the organ with ID"+ id);
+			}else {
+		        System.out.println("Organ not found with ID " + id);
+			}
+			prep.close();		
+		}catch(Exception e) {
+			System.out.println("Error in data bases with the organ ID " + id);
+			e.printStackTrace();
+		}
+	}
+	
+	public Organ getOrganByID(Integer id) {
+		try {
+			String sql = "SELECT * FROM Organ WHERE id = " + id;
+			Statement st = manager.getConnection().createStatement();
+			ResultSet rs= st.executeQuery(sql);
+			rs.next();
+			Organ o = new Organ (rs.getInt("id"), rs.getString("gender"), rs.getString("gender"), rs.getString("size"), rs.getFloat("quality"),rs.getString("bloodType"));
+			return o;
+		}catch(Exception e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void listAllOrgans() { //TODO no hemos decidido como guardar los Organos todavia
+		
+	}
+	
 	
 	
 	
