@@ -1,5 +1,6 @@
 package OrganClinicJDBC;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,6 +14,58 @@ public class JDBCTreatmentManager implements TreatmentManager{
 	private JDBCManager manager;	
 	private JDBCTreatmentManager(JDBCManager m) {
 		this.manager= m;
+	}
+	public void addTreatment(Treatment treatment) {
+		try {//it is not necessary to put the id, because it is autoincremented
+			String sql = "INSERT INTO Organ (name, type, duration) VALUES (?, ?, ?)";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, treatment.getName());	
+			prep.setString(2, treatment.getType());
+			prep.setInt(3, treatment.getDuration());
+			
+			prep.executeUpdate();
+			prep.close();
+		}catch(Exception e){
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}	
+	}
+	
+	public void modifyOrgan(Treatment treatment) {
+		try {
+			String query = "UPDATE Organ SET id= ?, name= ?, type= ?, duration= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(query);
+			prep.setInt(1, treatment.getId());
+			prep.setString(2, treatment.getName());
+			prep.setString(3, treatment.getType());
+	        prep.setInt(4, treatment.getDuration()); 
+	    
+	        prep.executeUpdate();
+	        prep.close();
+	        System.out.println("Organ with ID " + treatment.getId() + " updated successfully.");
+	        
+		}catch(Exception e){
+	        System.out.println("Error in the database");
+			e.printStackTrace();
+			}	
+	}
+	
+	public void deleteOrgan(Integer id) {
+		try {
+			String st= "DELETE FROM TREATMENT WHERE id= ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(st);
+			prep.setInt(1, id);
+			int rowsAffected = prep.executeUpdate();
+			if (rowsAffected>0) {
+		        System.out.println("Deleted successfully the treatment with ID"+ id);
+			}else {
+		        System.out.println("treatment not found with ID " + id);
+			}
+			prep.close();		
+		}catch(Exception e) {
+			System.out.println("Error in data bases with the treatment ID " + id);
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Treatment> getAllTreatment(){
