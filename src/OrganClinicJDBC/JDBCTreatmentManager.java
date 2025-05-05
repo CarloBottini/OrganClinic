@@ -17,7 +17,7 @@ public class JDBCTreatmentManager implements TreatmentManager{
 	}
 	public void addTreatment(Treatment treatment) {
 		try {//it is not necessary to put the id, because it is autoincremented
-			String sql = "INSERT INTO Organ (name, type, duration) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO Treatment (name, type, duration) VALUES (?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, treatment.getName());	
 			prep.setString(2, treatment.getType());
@@ -31,15 +31,15 @@ public class JDBCTreatmentManager implements TreatmentManager{
 		}	
 	}
 	
-	public void modifyOrgan(Treatment treatment) {
+	public void modifyTreatment(Treatment treatment) {
 		try {
-			String query = "UPDATE Organ SET id= ?, name= ?, type= ?, duration= ?";
+			String query = "UPDATE Treatment SET name= ?, type= ?, duration= ?  WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
-			prep.setInt(1, treatment.getId());
-			prep.setString(2, treatment.getName());
-			prep.setString(3, treatment.getType());
-	        prep.setInt(4, treatment.getDuration()); 
-	    
+			prep.setString(1, treatment.getName());
+			prep.setString(2, treatment.getType());
+	        prep.setInt(3, treatment.getDuration()); 
+			prep.setInt(4, treatment.getId());
+
 	        prep.executeUpdate();
 	        prep.close();
 	        System.out.println("Organ with ID " + treatment.getId() + " updated successfully.");
@@ -50,9 +50,9 @@ public class JDBCTreatmentManager implements TreatmentManager{
 			}	
 	}
 	
-	public void deleteOrgan(Integer id) {
+	public void deleteTreatment(Integer id) {
 		try {
-			String st= "DELETE FROM TREATMENT WHERE id= ?";
+			String st= "DELETE FROM Treatment WHERE id= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(st);
 			prep.setInt(1, id);
 			int rowsAffected = prep.executeUpdate();
