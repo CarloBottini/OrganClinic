@@ -38,14 +38,15 @@ public class JDBCOrganManager implements OrganManager {
 	
 	public void modifyOrgan(Organ o) {
 		try {
-			String query = "UPDATE Organ SET id= ?, gender= ?, type= ?, size= ?, quality= ?, bloodType= ? WHERE id=?";
+			String query = "UPDATE Organ SET gender= ?, type= ?, size= ?, quality= ?, bloodType= ? WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
-			prep.setInt(1, o.getId());
-			prep.setString(2, o.getGender());
-			prep.setString(3, o.getType());
-	        prep.setString(4, o.getSize()); 
-	        prep.setFloat(5, o.getQuality());
-	        prep.setString(6, o.getBloodType());
+			prep.setString(1, o.getGender());
+			prep.setString(2, o.getType());
+	        prep.setString(3, o.getSize()); 
+	        prep.setFloat(4, o.getQuality());
+	        prep.setString(5, o.getBloodType());
+			prep.setInt(6, o.getId());
+
 	        prep.executeUpdate();
 	        prep.close();
 	        System.out.println("Organ with ID " + o.getId() + " updated successfully.");
@@ -80,7 +81,7 @@ public class JDBCOrganManager implements OrganManager {
 			Statement st = manager.getConnection().createStatement();
 			ResultSet rs= st.executeQuery(sql);
 			rs.next();
-			Organ o = new Organ (rs.getInt("id"), rs.getString("gender"), rs.getString("gender"), rs.getString("size"), rs.getFloat("quality"),rs.getString("bloodType"));
+			Organ o = new Organ (rs.getInt("id"), rs.getString("gender"), rs.getString("type"), rs.getString("size"), rs.getFloat("quality"),rs.getString("bloodType"));
 			return o;
 		}catch(Exception e) {
 			System.out.println("Error in the database");
