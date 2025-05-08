@@ -6,11 +6,11 @@ import java.util.Objects;
 public class Blood implements Serializable{
 
 
+	private static final long serialVersionUID = 8646157018278551404L;
 /*
  * WE CAN DO THAT WHEN THE THEY CHOOSE THE BLOOD WECAN DO THAT THEY SELECT THEY BLOOD WITH A SELECTION
  * */
 	
-	private static final long serialVersionUID = 1L;
 	private String type;
 	
 	public Blood(String type) {
