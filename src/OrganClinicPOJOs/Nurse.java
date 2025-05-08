@@ -22,6 +22,15 @@ public class Nurse implements Serializable {
 		this.listOperation = listOperation;
 	}
 
+	
+	public Nurse(Integer id, String name, Boolean availability) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.availability = availability;
+		this.listOperation = listOperation;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
