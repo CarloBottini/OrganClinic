@@ -31,7 +31,7 @@ private JDBCManager manager;
 			prep.executeUpdate();
 			prep.close();
 		}catch(Exception e){
-			System.out.println("Error in the database");
+			System.out.println("Error in the database while scheduling an operation");
 			e.printStackTrace();
 		}	
 	}
@@ -53,21 +53,59 @@ private JDBCManager manager;
 	        prep.close();
 	        System.out.println("Operation with ID " + operation.getId() + " rescheduled successfully.");
 		}catch(Exception e){
-	        System.out.println("Error in the database");
+	        System.out.println("Error in the database rescheduling an operation");
 			e.printStackTrace();
 			}	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	  //we need to insert into HAS but also update the nurse availability
+	  public void assignedNurseToOperation(Integer nurse_id, Integer operation_id) {
+		  try {
+			  //HAS table
+				String template = "INSERT INTO Has (nurse_id, operation_id) VALUES (?,?)";
+				PreparedStatement assignPrep = manager.getConnection().prepareStatement(template);
+				assignPrep.setInt(1, nurse_id);
+				assignPrep.setInt(2, operation_id);
+				assignPrep.executeUpdate();
+				assignPrep.close();
+			//UPDATE nurse availability	
+				String updateAvailability = "UPDATE Nurse SET availability = false WHERE id = ?";
+		        PreparedStatement availPrep = manager.getConnection().prepareStatement(updateAvailability);
+		        availPrep.setInt(1, nurse_id);
+		        availPrep.executeUpdate();
+		        availPrep.close();
+				
+				
+			} catch (Exception e) {
+				System.out.println("Error in the database while assigning a nurse to operation");
+				e.printStackTrace();
+			}
+
+
+		  }
+	  
+	//DELETE HAS and nurse availability set TRUE
+		public void unassignedNurseToOperation(Integer nurse_id, Integer operation_id) {
+		    try {
+		        String template = "DELETE FROM Has WHERE nurse_id = ? AND operation_id = ?";
+		        PreparedStatement deletePrep  = manager.getConnection().prepareStatement(template);
+		        deletePrep.setInt(1, nurse_id);
+		        deletePrep.setInt(2, operation_id);		       
+		        deletePrep.executeUpdate();
+		        deletePrep.close();
+		        
+		        String updateAvailability = "UPDATE Nurse SET availability = true WHERE id = ?";
+		        PreparedStatement availPrep = manager.getConnection().prepareStatement(updateAvailability);
+		        availPrep.setInt(1, nurse_id);
+		        availPrep.executeUpdate();
+		        availPrep.close();
+		        
+		    } catch (Exception e) {
+		        System.out.println("Error in the database while unassigning nurse from operation");
+		        e.printStackTrace();
+		    }
+		}
+
 	
 	
 	
