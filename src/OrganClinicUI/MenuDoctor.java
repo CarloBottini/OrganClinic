@@ -1,5 +1,5 @@
 package OrganClinicUI;
 
-public class menuPatient {
+public class MenuDoctor {
 
 }

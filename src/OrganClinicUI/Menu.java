@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 
 import OrganClinicJDBC.*;
 
-public class menu {
+public class Menu {
 
 	
 	private static JDBCManager jdbcmanager;
