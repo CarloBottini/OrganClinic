@@ -2,6 +2,7 @@ package OrganClinicPOJOs;
 
 import java.io.Serializable;
 import java.sql.Date; //Date from sql so it will be correct later
+import java.util.List;
 import java.util.Objects;
 
 public class Operation implements Serializable{
@@ -14,10 +15,9 @@ public class Operation implements Serializable{
 	private Integer patient_id;
 	private Integer treatment_id;
 	private Integer doctor_id;
-	//TODO correct this so it will have lists
+	private List<Nurse> listNurse;
 	
-	
-	public Operation(Integer id, Boolean isDone, Date date, Integer patient_id, Integer treatment_id, Integer doctor_id) {
+	public Operation(Integer id, Boolean isDone, Date date, Integer patient_id, Integer treatment_id, Integer doctor_id, List<Nurse> listNurse) {
 		super();
 		this.id = id;
 		this.isDone = isDone;
@@ -25,6 +25,7 @@ public class Operation implements Serializable{
 		this.patient_id = patient_id;
 		this.treatment_id = treatment_id;
 		this.doctor_id = doctor_id;
+		this.listNurse = listNurse;
 	}
 
 	public Integer getId() {
@@ -75,6 +76,14 @@ public class Operation implements Serializable{
 		this.doctor_id = doctor_id;
 	}
 
+	public List<Nurse> getListNurse() {
+		return listNurse;
+	}
+
+	public void setListNurse(List<Nurse> listNurse) {
+		this.listNurse = listNurse;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -95,8 +104,9 @@ public class Operation implements Serializable{
 	@Override
 	public String toString() {
 		return "Operation [id=" + id + ", isDone=" + isDone + ", date=" + date + ", patient_id=" + patient_id
-				+ ", treatment_id=" + treatment_id + ", doctor_id=" + doctor_id + "]";
+				+ ", treatment_id=" + treatment_id + ", doctor_id=" + doctor_id + ", listNurse=" + listNurse + "]";
 	}
+	
 	
 	
 	
