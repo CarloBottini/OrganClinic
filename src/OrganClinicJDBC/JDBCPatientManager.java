@@ -16,7 +16,7 @@ public class JDBCPatientManager implements PatientManager{
 
 	
 
-	private JDBCPatientManager(JDBCManager m) {
+	public JDBCPatientManager(JDBCManager m) {
 		this.manager = m;
 	}
 	
