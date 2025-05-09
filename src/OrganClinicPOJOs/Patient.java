@@ -20,8 +20,7 @@ public class Patient implements Serializable{
 	private String bloodType;
 	
 	
-	public Patient(Integer id, String name, Date dob, String gender, String organFailure, String email,
-			Integer telephone, String bloodType) {
+	public Patient(Integer id, String name, Date dob, String gender, String organFailure, String email, Integer telephone, String bloodType) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -32,6 +31,21 @@ public class Patient implements Serializable{
 		this.telephone = telephone;
 		this.bloodType = bloodType;
 	}
+	
+	
+	public Patient(String name, Date dob, String gender, String organFailure, String email, Integer telephone, String bloodType) {//without id
+		super();
+		this.name = name;
+		this.dob = dob;
+		this.gender = gender;
+		this.organFailure = organFailure;
+		this.email = email;
+		this.telephone = telephone;
+		this.bloodType = bloodType;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}
