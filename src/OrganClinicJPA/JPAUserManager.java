@@ -3,7 +3,6 @@ package OrganClinicJPA;
 import javax.persistence.Persistence;
 
 import OrganClinicINTERFACEs.UserManager;
-import VetClinicPOJOs.Role;
 
 public class JPAUserManager implements UserManager{
 	//todo fijarse en el video las diferentes librerias que introducen
