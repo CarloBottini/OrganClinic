@@ -1,20 +1,108 @@
 package OrganClinicUI;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
+import java.util.List;
 
+import OrganClinicINTERFACEs.PatientManager;
+import OrganClinicINTERFACEs.UserManager;
 import OrganClinicJDBC.*;
+import OrganClinicJPA.JPAUserManager;
+import OrganClinicPOJOs.Role;
+import OrganClinicPOJOs.User;
 
 public class Menu {
 
 	
 	private static JDBCManager jdbcmanager;
-	private static JDBCPatientManager patientManager;
+	private static PatientManager patientManager;
+	private static UserManager usermanager;
 	private static BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
 
 	
 	public static void main(String[] args) {
+		jdbcmanager = new JDBCManager();
+		usermanager= new JPAUserManager();
 		
 	
+		usermanager.connect();
+		int choice=0;
+		try {
+			do {
+				System.out.println("Welcome to the organ clinic");
+				System.out.println("choose one of the following options");
+				System.out.println("1.Login");
+				System.out.println("2.Sign-up");
+				System.out.println("0.exit");
+				choice=Integer.parseInt(reader.readLine());
+				switch(choice) {
+				case 1://Login 
+					login();
+					
+					break;
+				case 2://sign-up
+					addNewUser();
+					break;
+				case 0:
+					jdbcmanager.closeConnection();
+					usermanager.disconnect();
+					break;
+				}
+				
+			}while(choice!=0);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private static void login() {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println("Introduce email: ");
+			String email= reader.readLine();
+			
+			System.out.println("Introduce the password: ");
+			String password= reader.readLine();
+			User u = usermanager.checkPassword(email, password);
+			if(u!=null& u.getRole().getDescription().equals("Clinician")){
+				System.out.println("Login Successful!");
+				clinicianmenu(u.getEmail());
+			}
+			
+			
+	}catch(IOException e) {
+		e.printStackTrace();
+	}
+	}
+	private static void clinicianmenu(String string) {
+		// TODO Auto-generated method stu
+		
+	}
+	private static void addNewUser() {
+		try {
+			System.out.println("Introduce email: ");
+			String email= reader.readLine();
+			
+			System.out.println("Introduce the password: ");
+			String password= reader.readLine();
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[]digest= md.digest();
+			
+			System.out.println("choose one role: ");
+			List<Role> roles= usermanager.getRoles();
+			System.out.println(roles.toString());
+			Integer role= Integer.parseInt(reader.readLine());
+			
+			Role r= usermanager.getRole(role);
+			User u = new User(email,digest, r);
+			usermanager.newUser(u);
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
