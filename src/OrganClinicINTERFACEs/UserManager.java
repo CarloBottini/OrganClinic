@@ -1,6 +1,7 @@
 package OrganClinicINTERFACEs;
 
-import OrganClinicJPA.List;
+import java.util.List;
+
 import OrganClinicPOJOs.Role;
 import OrganClinicPOJOs.User;
 
