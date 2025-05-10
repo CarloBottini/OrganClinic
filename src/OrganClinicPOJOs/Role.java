@@ -37,9 +37,18 @@ public class Role implements Serializable {
 		super();
 		this.id = id;
 		this.description = description;
+		users = new ArrayList<User>();
 	}
 
 	
+
+
+	public Role(String description) {
+		super();
+		this.description = description;
+		users = new ArrayList<User>();	
+		}
+
 	public List<User> getUsers() {
 		return users;
 	}
