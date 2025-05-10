@@ -85,6 +85,11 @@ public class Role implements Serializable {
 	public String toString() {
 		return "Role [description=" + description + "]";
 	}
+
+	public Object getDescription() {
+		// TODO Auto-generated method stub
+		return description;
+	}
 	
 	
 	

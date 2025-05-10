@@ -33,6 +33,7 @@ public class User implements Serializable {
 	@ManyToOne
 	@JoinColumn ( name = "role_id")
 	private Role role;
+	private String description;
 
 
 
@@ -85,6 +86,21 @@ public class User implements Serializable {
 				+ "]";
 	}
 	
+
+	public String getEmail() {
+		
+		// TODO Auto-generated method stub
+		return email;
+	}
+
+	public Role getRole() {
+		// TODO Auto-generated method stub
+		return role;
+	}
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return description;
+	}
 	
 	
 

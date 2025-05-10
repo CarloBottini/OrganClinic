@@ -20,4 +20,6 @@ public interface UserManager {
 
 	Role getRole(Integer id);
 
+	User checkPassword(String email, String pw);
+
 }

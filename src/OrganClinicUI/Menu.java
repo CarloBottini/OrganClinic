@@ -76,7 +76,7 @@ public class Menu {
 	}
 	}
 	private static void clinicianmenu(String string) {
-		// TODO Auto-generated method stu
+		// TODO Auto-generated method stub
 		
 	}
 	private static void addNewUser() {
