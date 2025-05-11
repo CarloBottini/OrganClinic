@@ -28,7 +28,7 @@ public class Nurse implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.availability = availability;
-		this.listOperation = listOperation;
+		this.listOperation = null;
 	}
 	
 	public Integer getId() {
@@ -85,8 +85,7 @@ public class Nurse implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Nurse [id=" + id + ", name=" + name + ", availability=" + availability + ", listOperation="
-				+ listOperation + "]";
+		return "Nurse [id=" + id + ", name=" + name + ", availability=" + availability + "]";
 	}
 	
 	

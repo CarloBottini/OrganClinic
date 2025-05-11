@@ -2,6 +2,9 @@ package OrganClinicJDBC;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import OrganClinicINTERFACEs.OperationManager;
 import OrganClinicPOJOs.Operation;
@@ -13,7 +16,7 @@ public class JDBCOperationManager implements OperationManager{
 private JDBCManager manager;
 	
 	
-	private JDBCOperationManager(JDBCManager m) {
+	public JDBCOperationManager(JDBCManager m) {
 		this.manager=m;
 	}
 	
@@ -106,8 +109,58 @@ private JDBCManager manager;
 		    }
 		}
 
-	
-	
+		public List<Operation> getOperationsByPatientId(Integer patientId) {
+		    List<Operation> operations = new ArrayList<>();
+		    try {
+		        String sql = "SELECT * FROM Operation WHERE patientId = ?";
+		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		        prep.setInt(1, patientId);
+		        ResultSet rs = prep.executeQuery();
+
+		        while (rs.next()) {
+		            Integer id = rs.getInt("id");
+		            Boolean isDone= rs.getBoolean("isDone");
+		            Date date = rs.getDate("date");
+		            Integer patient_id =rs.getInt("patient_id");
+		            Integer treatment_id = rs.getInt("treatment_id");
+		            Integer doctor_id = rs.getInt("doctor_id");
+		            operations.add(new Operation(id,isDone, date,patient_id, treatment_id, doctor_id));
+		        }
+		        prep.close();
+		        rs.close();
+		    } catch (Exception e) {
+		        System.out.println("Error in the database while getting operations from patient:  " + patientId);
+		        e.printStackTrace();
+		    }
+		    return operations;
+		}
+		
+		
+		public Operation getOperationByID(Integer operationId) {
+			Operation operation = null;
+		    try {
+		        String sql = "SELECT * FROM Operation WHERE id = ?";
+		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+		        prep.setInt(1, operationId);
+		        ResultSet rs = prep.executeQuery();
+
+		        if (rs.next()) {
+		            Integer id = rs.getInt("id");
+		            Boolean isDone= rs.getBoolean("isDone");
+		            Date date = rs.getDate("date");
+		            Integer patient_id =rs.getInt("patient_id");
+		            Integer treatment_id = rs.getInt("treatment_id");
+		            Integer doctor_id = rs.getInt("doctor_id");
+		            operation = new Operation(id, isDone,date,patient_id, treatment_id, doctor_id);
+		        }
+		        prep.close();
+		        rs.close();
+		    } catch (Exception e) {
+		        System.out.println("Error in the database while getting one operation by the patient id " + operationId);
+		        e.printStackTrace();
+		    }
+		    return operation;
+		}
 	
 	
 }

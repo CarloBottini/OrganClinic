@@ -10,6 +10,7 @@ public interface DoctorManager {
 	public void addDoctor (Doctor doc);
 	public Doctor getDoctorByID(Integer id);
 	public Doctor getDoctorByEmail(String email);
+	public void modifyDoctor(Doctor doctor);
 
 
 	

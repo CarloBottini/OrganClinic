@@ -27,6 +27,20 @@ public class Operation implements Serializable{
 		this.doctor_id = doctor_id;
 		this.listNurse = listNurse;
 	}
+	
+
+
+	public Operation(Integer id, Boolean isDone, Date date, Integer patient_id, Integer treatment_id,
+			Integer doctor_id) {
+		super();
+		this.id = id;
+		this.isDone = isDone;
+		this.date = date;
+		this.patient_id = patient_id;
+		this.treatment_id = treatment_id;
+		this.doctor_id = doctor_id;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -106,8 +120,5 @@ public class Operation implements Serializable{
 		return "Operation [id=" + id + ", isDone=" + isDone + ", date=" + date + ", patient_id=" + patient_id
 				+ ", treatment_id=" + treatment_id + ", doctor_id=" + doctor_id + ", listNurse=" + listNurse + "]";
 	}
-	
-	
-	
-	
+
 }

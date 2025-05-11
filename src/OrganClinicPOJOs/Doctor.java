@@ -99,22 +99,4 @@ public class Doctor implements Serializable{
 		Doctor other = (Doctor) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

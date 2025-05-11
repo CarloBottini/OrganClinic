@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import OrganClinicINTERFACEs.PatientManager;
 import OrganClinicPOJOs.Patient;
@@ -131,6 +133,36 @@ public class JDBCPatientManager implements PatientManager{
 		}
 		return patient;
 	}
+	
+	@Override
+	public List<Patient> getAllPatients() {
+	    List<Patient> patients = new ArrayList<Patient>();
+	    try {
+	        Statement stmt = manager.getConnection().createStatement();
+	        String sql = "SELECT * FROM Patient";  	       
+	        ResultSet rs = stmt.executeQuery(sql);	        
+	        while (rs.next()) {
+	            Integer id = rs.getInt("id");
+	            String name = rs.getString("name");
+	            Date dob = rs.getDate("dob");
+	            String gender = rs.getString("gender");
+	            String organFailure = rs.getString("organFailure");
+	            String email = rs.getString("email");
+	            Integer telephone = rs.getInt("telephone");
+	            String bloodType = rs.getString("bloodType");
+	            
+	            Patient patient = new Patient(id, name, dob, gender, organFailure, email, telephone, bloodType);
+	            patients.add(patient);
+	        }	        
+	        rs.close();
+	        stmt.close();
+	    } catch (Exception e) {
+	        System.out.println("Error in the database while getting all the patients with their info");
+	        e.printStackTrace();
+	    }	    
+	    return patients;
+	}
+	
 	
 	
 }
