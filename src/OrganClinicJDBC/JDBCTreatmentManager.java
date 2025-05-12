@@ -12,7 +12,7 @@ import OrganClinicPOJOs.Treatment;
 public class JDBCTreatmentManager implements TreatmentManager{
 	
 	private JDBCManager manager;	
-	private JDBCTreatmentManager(JDBCManager m) {
+	public JDBCTreatmentManager(JDBCManager m) {
 		this.manager= m;
 	}
 	public void addTreatment(Treatment treatment) {

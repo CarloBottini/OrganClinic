@@ -3,6 +3,8 @@ package OrganClinicJDBC;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import OrganClinicINTERFACEs.OrganManager;
 import OrganClinicPOJOs.Organ;
@@ -13,7 +15,7 @@ public class JDBCOrganManager implements OrganManager {
 	private JDBCManager manager;
 	
 	
-	private JDBCOrganManager(JDBCManager m) {
+	public JDBCOrganManager(JDBCManager m) {
 		this.manager=m;
 	}
 	
@@ -90,8 +92,30 @@ public class JDBCOrganManager implements OrganManager {
 		return null;
 	}
 	
-	public void listAllOrgans() { //TODO no hemos decidido como guardar los Organos todavia
-		
+	public List<Organ> getAllOrgans() {
+	    List<Organ> allOrgans = new ArrayList<Organ>();
+	    try {
+	        Statement stmt = manager.getConnection().createStatement();
+	        String sql = "SELECT * FROM Organ";
+	        ResultSet rs = stmt.executeQuery(sql);
+	        
+	        while (rs.next()) {
+	            Integer id = rs.getInt("id");
+	            String gender = rs.getString("gender");
+	            String type = rs.getString("type");
+	            String size = rs.getString("size");
+	            Float quality = rs.getFloat("quality");
+	            String bloodType = rs.getString("bloodType");
+	            
+	            Organ organ = new Organ(id, gender, type, size, quality, bloodType);
+	            allOrgans.add(organ);
+	        }
+	        rs.close();
+	        stmt.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return allOrgans;
 	}
 	
 	

@@ -80,9 +80,4 @@ public class Organ implements Serializable {
 		return "Organ [id=" + id + ", gender=" + gender + ", type=" + type + ", size=" + size + ", quality="
 				+ quality + ", bloodType=" + bloodType + "]";
 	}
-	
-	
-	
-	
-	
 }

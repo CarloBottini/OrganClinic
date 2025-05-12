@@ -22,6 +22,13 @@ public class Compatible implements Serializable{
 		this.organ_id = organ_id;
 		this.patient_id = patient_id;
 	}
+	public Compatible(Patient patient_id, Organ organ_id,Float percentCompatibility, Boolean bloodCompatible) {
+		super();
+		this.patient_id = patient_id;
+		this.organ_id = organ_id;
+		this.percentCompatibility = percentCompatibility;
+		this.bloodCompatible = bloodCompatible;
+	}
 
 
 	public Float getPercentCompatibility() {
