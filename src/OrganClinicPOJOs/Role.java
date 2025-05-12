@@ -90,6 +90,14 @@ public class Role implements Serializable {
 		// TODO Auto-generated method stub
 		return description;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	
 	
 	

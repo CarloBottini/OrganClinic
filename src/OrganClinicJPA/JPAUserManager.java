@@ -33,13 +33,12 @@ public class JPAUserManager implements UserManager{
 		em.createNativeQuery("PRAGMA foreign_keys = ON").executeUpdate();
 		em.getTransaction().commit();
 		
-		if(this.getRoles().isEmpty())
-		{
-			Role Patient = new Role("Patient");
-			Role Doctor = new Role("Doctor");
+		if(this.getRoles().isEmpty()) {
+			Role Patient = new Role("Patient"); //role 1= Patient
+			Role Doctor = new Role("Doctor");	//role 2= Doctor
 			this.newRole(Patient);
 			this.newRole(Doctor);
-		}
+			}
 		}
 		@Override
 		public void disconnect() {

@@ -42,7 +42,7 @@ public class Menu {
 					
 					break;
 				case 2://sign-up
-					addNewUser();
+					signUp();
 					break;
 				case 0:
 					jdbcManager.closeConnection();
@@ -57,37 +57,29 @@ public class Menu {
 		}
 	}
 	private static void login() {
-		// TODO Auto-generated method stub
 		try {
 			System.out.println("Introduce email: ");
 			String email= reader.readLine();
-			
 			System.out.println("Introduce the password: ");
 			String password= reader.readLine();
 			User u = userManager.checkPassword(email, password);
 			
-			//TODO CORRECT THIS, wew have 2 roles, we can compare the role by id then it goes to doctor menu or patientmenu
-			
-//here correct here			
-			if(u!=null& u.getRole().getDescription().equals("Clinician")){
-				System.out.println("Login Successful!");
-				clinicianmenu(u.getEmail());
+			//we have 2 roles, we can compare the role by id then it goes to doctor menu or patientmenu			
+			if (u == null) 
+				System.out.println("The information is incorrect");
+			else if (u.getRole().getId()==1) {
+				MenuDoctor.menuDoctor(email);				
 			}
-			
-			
+			else if(u.getRole().getId()==2) {
+				MenuPatient.menuPatient(email);
+			}			
 	}catch(IOException e) {
 		e.printStackTrace();
-	}
-	}
-	
-	//TODO delete this dont need this, just call the menu class of doctor
-	private static void clinicianmenu(String string) {
-		// TODO Auto-generated method stub
-		
+		}
 	}
 	
 	//sign up method
-	private static void addNewUser() {
+	private static void signUp() {
 		try {
 			System.out.println("Introduce email: ");
 			String email= reader.readLine();
@@ -98,16 +90,15 @@ public class Menu {
 			md.update(password.getBytes());
 			byte[]digest= md.digest();
 			
-			System.out.println("choose one role: ");
+			System.out.println("choose one role by inserting the number: ");
+			//TODO mirar en la tabla tables cual es role 1= y role 2=
 			List<Role> roles= userManager.getRoles();
 			System.out.println(roles.toString());
 			Integer role= Integer.parseInt(reader.readLine());
 			
 			Role r= userManager.getRole(role);
 			User u = new User(email,digest, r);
-			userManager.newUser(u);
-			
-			
+			userManager.newUser(u);			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
