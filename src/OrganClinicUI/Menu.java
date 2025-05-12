@@ -15,18 +15,18 @@ import OrganClinicPOJOs.User;
 public class Menu {
 
 	
-	private static JDBCManager jdbcmanager;
+	private static JDBCManager jdbcManager;
 	private static PatientManager patientManager;
-	private static UserManager usermanager;
+	private static UserManager userManager;
 	private static BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
 
 	
 	public static void main(String[] args) {
-		jdbcmanager = new JDBCManager();
-		usermanager= new JPAUserManager();
+		jdbcManager = new JDBCManager();
+		userManager= new JPAUserManager();
 		
 	
-		usermanager.connect();
+		userManager.connect();
 		int choice=0;
 		try {
 			do {
@@ -45,8 +45,8 @@ public class Menu {
 					addNewUser();
 					break;
 				case 0:
-					jdbcmanager.closeConnection();
-					usermanager.disconnect();
+					jdbcManager.closeConnection();
+					userManager.disconnect();
 					break;
 				}
 				
@@ -64,7 +64,11 @@ public class Menu {
 			
 			System.out.println("Introduce the password: ");
 			String password= reader.readLine();
-			User u = usermanager.checkPassword(email, password);
+			User u = userManager.checkPassword(email, password);
+			
+			//TODO CORRECT THIS, wew have 2 roles, we can compare the role by id then it goes to doctor menu or patientmenu
+			
+//here correct here			
 			if(u!=null& u.getRole().getDescription().equals("Clinician")){
 				System.out.println("Login Successful!");
 				clinicianmenu(u.getEmail());
@@ -75,29 +79,33 @@ public class Menu {
 		e.printStackTrace();
 	}
 	}
+	
+	//TODO delete this dont need this, just call the menu class of doctor
 	private static void clinicianmenu(String string) {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//sign up method
 	private static void addNewUser() {
 		try {
 			System.out.println("Introduce email: ");
 			String email= reader.readLine();
-			
 			System.out.println("Introduce the password: ");
 			String password= reader.readLine();
+			
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(password.getBytes());
 			byte[]digest= md.digest();
 			
 			System.out.println("choose one role: ");
-			List<Role> roles= usermanager.getRoles();
+			List<Role> roles= userManager.getRoles();
 			System.out.println(roles.toString());
 			Integer role= Integer.parseInt(reader.readLine());
 			
-			Role r= usermanager.getRole(role);
+			Role r= userManager.getRole(role);
 			User u = new User(email,digest, r);
-			usermanager.newUser(u);
+			userManager.newUser(u);
 			
 			
 		}catch(Exception e) {
