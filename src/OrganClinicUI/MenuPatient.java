@@ -30,7 +30,6 @@ public class MenuPatient {
 	public static void menuPatient(String email) throws NumberFormatException, IOException {
 		connectionManager= new JDBCManager();
 		patientMan = new JDBCPatientManager(connectionManager);
-		//TODO ??? see if conect the pojos
 		
 		System.out.println("Welcome patient! Insert the option: ");
 		int variableWhilePatient=1;
@@ -38,7 +37,6 @@ public class MenuPatient {
 		while(variableWhilePatient!=0) {
 		System.out.println("1) SEE YOUR PROFILE INFORMATION");
 		System.out.println("2) MODIFY YOUR PROFILE INFORMATION");
-		System.out.println("3) SEE DOCTOR'S INFORMATION");
 		System.out.println("0) EXIT");
 		int patientChoice = Integer.parseInt(r.readLine());
 

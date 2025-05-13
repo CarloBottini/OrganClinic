@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 @Entity
-@Table(name="role")
+@Table(name="roles")
 
 public class Role implements Serializable {
 

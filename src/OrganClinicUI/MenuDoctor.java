@@ -58,7 +58,6 @@ public class MenuDoctor {
 		treatmentMan= new JDBCTreatmentManager(connectionManager);
 		organMan= new JDBCOrganManager(connectionManager);
 		compatibleMan= new JDBCCompatibleManager(connectionManager);
-		//TODO ??? see if conect the pojos
 		
 		System.out.println("Welcome Doctor! We are thrilled with your excellent work! Choose one of the following options: ");
 		int whileDoctorVariable=1;
@@ -66,7 +65,6 @@ public class MenuDoctor {
 		while(whileDoctorVariable!=0) {
 		System.out.println("1) ADD NEW PATIENT INTO THE DATABASE");
 		System.out.println("2) DELETE A PATIENT FROM THE DATABASE");
-		//TODO DELETE THIS System.out.println("3) MODIFY THE PATIENT'S INFORMATION");
 		System.out.println("3) SEE DOCTOR'S PROFILE");
 		System.out.println("4) MODIFY DOCTOR'S PROFILE");
 		System.out.println("5) SEE ALL NURSES AVAILABILITY");
@@ -74,7 +72,7 @@ public class MenuDoctor {
 		System.out.println("7) DELETE A NURSE FROM AN OPERATION");
 		System.out.println("8) SCHEDULE AN OPERATION");
 		System.out.println("9) RESCHEDULE AN OPERATION");
-		System.out.println("10) showAllTreatment");
+		System.out.println("10) SHOW ALL TREATMENTS");
 		System.out.println("11) SEE ALL THE ORGANS");
 		System.out.println("12) SEE THE CHARACTERISTICS OF AN ORGAN");
 		

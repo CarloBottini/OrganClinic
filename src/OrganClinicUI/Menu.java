@@ -45,6 +45,8 @@ public class Menu {
 					signUp();
 					break;
 				case 0:
+					System.out.println("Closing the program. See you soon....");
+
 					jdbcManager.closeConnection();
 					userManager.disconnect();
 					break;
@@ -68,10 +70,11 @@ public class Menu {
 			if (u == null) 
 				System.out.println("The information is incorrect");
 			else if (u.getRole().getId()==1) {
-				MenuDoctor.menuDoctor(email);				
+				MenuPatient.menuPatient(email);
 			}
 			else if(u.getRole().getId()==2) {
-				MenuPatient.menuPatient(email);
+				MenuDoctor.menuDoctor(email);				
+
 			}			
 	}catch(IOException e) {
 		e.printStackTrace();
