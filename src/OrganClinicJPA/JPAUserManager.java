@@ -22,13 +22,14 @@ public class JPAUserManager implements UserManager{
 		super();
 		this.connect();
 	}
+
 	
 	@Override
 	public void connect() {
 		// TODO Auto-generated method stub
 		
 		em = Persistence.createEntityManagerFactory("OrganClinic-provider").createEntityManager();
-	
+												
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys = ON").executeUpdate();
 		em.getTransaction().commit();
