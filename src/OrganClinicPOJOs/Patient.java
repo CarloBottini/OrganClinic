@@ -4,19 +4,37 @@ import java.io.Serializable;
 import java.sql.Date; //it will helps us later
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Patient")
+@XmlType(propOrder = {"name", "dob", "gender","organFailure", "email", "telephone", "bloodType"})
 public class Patient implements Serializable{
 
 
 	private static final long serialVersionUID = 448543727153060322L;
 	
+	@XmlTransient
 	private Integer id;
+	@XmlElement
 	private String name;
+	@XmlAttribute
 	private Date dob;
+	@XmlAttribute
 	private String gender;
+	@XmlElement
 	private String organFailure; 
+	@XmlElement
 	private String email;
+	@XmlElement
 	private Integer telephone;
+	@XmlElement
 	private String bloodType;
 	
 	
