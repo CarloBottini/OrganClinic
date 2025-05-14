@@ -28,7 +28,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	
 	//TODO We will need to put Override wehn the interfaces are done
-	
+	@Override
 	public void addPatient(Patient p) {
 		try {//it is not necessary to put the id, because it is autoincremented
 			String sql = "INSERT INTO Patient (name, dob, gender, organFailure, email, telephone, bloodType) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -52,7 +52,7 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	
-	
+	@Override
 	public void modifyPatient(Patient p) {
 		try {
 			String query = "UPDATE Patient SET name= ?, dob= ?, gender= ?, organFailure= ?, email= ?, telephone= ?, bloodType= ? WHERE id=?";
@@ -75,7 +75,7 @@ public class JDBCPatientManager implements PatientManager{
 			}	
 	}
 	
-	
+	@Override
 	public void deletePatient(Integer id) {
 		try {
 			String st= "DELETE FROM Patient WHERE id= ?";
@@ -95,7 +95,7 @@ public class JDBCPatientManager implements PatientManager{
 	}
 	
 	
-	
+	@Override
 	public Patient getPatientByID(Integer id) {
 		try {
 			String sql = "SELECT * FROM Patient WHERE id = " + id;
@@ -114,7 +114,7 @@ public class JDBCPatientManager implements PatientManager{
 	
 	
 	//in the future this will be the user email=username
-	
+	@Override
 	public Patient getPatientByEmail(String email) {
 		Patient patient= null;
 		try {
@@ -163,6 +163,37 @@ public class JDBCPatientManager implements PatientManager{
 	    return patients;
 	}
 	
+	
+	@Override
+	public List<Patient> getPatientsByName(String name) {
+		List<Patient> patients = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM Patient WHERE name LIKE ?";
+			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+			prep.setString(1, "%" + name + "%"); //for example: introduce Pe for searching Pedro
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				Patient patient = new Patient(
+					rs.getInt("id"),
+					rs.getString("name"),
+					rs.getDate("dob"),
+					rs.getString("gender"),
+					rs.getString("organFailure"),
+					rs.getString("email"),
+					rs.getInt("telephone"),
+					rs.getString("bloodType")
+				);
+				patients.add(patient);
+			}
+			prep.close();
+			rs.close();
+		} catch (Exception e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return patients;
+	}
+
 	
 	
 }

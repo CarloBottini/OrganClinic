@@ -1,12 +1,14 @@
 package OrganClinicUI;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -19,6 +21,8 @@ import OrganClinicINTERFACEs.OperationManager;
 import OrganClinicINTERFACEs.OrganManager;
 import OrganClinicINTERFACEs.PatientManager;
 import OrganClinicINTERFACEs.TreatmentManager;
+import OrganClinicINTERFACEs.UserManager;
+import OrganClinicINTERFACEs.XMLManager;
 import OrganClinicJDBC.JDBCCompatibleManager;
 import OrganClinicJDBC.JDBCDoctorManager;
 import OrganClinicJDBC.JDBCManager;
@@ -27,6 +31,7 @@ import OrganClinicJDBC.JDBCOperationManager;
 import OrganClinicJDBC.JDBCOrganManager;
 import OrganClinicJDBC.JDBCPatientManager;
 import OrganClinicJDBC.JDBCTreatmentManager;
+import OrganClinicJPA.JPAUserManager;
 import OrganClinicPOJOs.Compatible;
 import OrganClinicPOJOs.Doctor;
 import OrganClinicPOJOs.Nurse;
@@ -34,6 +39,7 @@ import OrganClinicPOJOs.Operation;
 import OrganClinicPOJOs.Organ;
 import OrganClinicPOJOs.Patient;
 import OrganClinicPOJOs.Treatment;
+import OrganClinicXML.XMLManagerImpl;
 
 public class MenuDoctor {
 
@@ -47,6 +53,8 @@ public class MenuDoctor {
 	private static TreatmentManager treatmentMan;
 	private static OrganManager organMan;
 	private static CompatibleManager compatibleMan;
+	private static UserManager userMan;
+	private static XMLManager xmlMan;
 
 
 	public static void menuDoctor(String email) throws NumberFormatException, IOException {
@@ -58,6 +66,8 @@ public class MenuDoctor {
 		treatmentMan= new JDBCTreatmentManager(connectionManager);
 		organMan= new JDBCOrganManager(connectionManager);
 		compatibleMan= new JDBCCompatibleManager(connectionManager);
+		userMan= new JPAUserManager();
+		xmlMan= new XMLManagerImpl();
 		
 		System.out.println("Welcome Doctor! We are thrilled with your excellent work! Choose one of the following options: ");
 		int whileDoctorVariable=1;
@@ -75,6 +85,11 @@ public class MenuDoctor {
 		System.out.println("10) SHOW ALL TREATMENTS");
 		System.out.println("11) SEE ALL THE ORGANS");
 		System.out.println("12) SEE THE CHARACTERISTICS OF AN ORGAN");
+		System.out.println("13) CHECK COMPATIBILITY BETWEEN PATIENT AND ORGAN");
+		System.out.println("14) GENERATE A XML FILE");
+		System.out.println("15) DOWNLOAD A XML INTO THE PROGRAM");
+		System.out.println("16) GENERATE A HTML FILE");
+		System.out.println("17) DOWNLOAD A HTML INTO THE PROGRAM");
 		
 		//later we will TODO the XML CASES
 		
@@ -84,55 +99,130 @@ public class MenuDoctor {
 		int doctorChoice = Integer.parseInt(r.readLine());
 			switch (doctorChoice) {
 			case 1: 
-				//add doctor
+				addPatient();
 				break;
 			
 			case 2: 
-				//delete doctor
+				deletePatient();
 				break;
 						
 			case 3: 
-				//see doctro profile
+				showDoctorProfile(doctor);
 				break;
 				
 			case 4: 
-				//modify doctor profile
+				modifyDoctorProfile(doctor);
 				break;	
 				
 			case 5: 
-				//see nurses availability
-	
+				seeAvailableNurses();	
 				break;
 				
 			case 6: 
-				//assign nurse to operation
+				assignNurseToOperation();
+
 				break;
 				
 			case 7: 
-				//delete nurse from operation
+				unassignedNurseToOperation();
 				break;
 				
 			case 8: 
-				//schedule operation
+				scheduleOperation();
 				break;
 				
 				
 			case 9: 
-				//reeschedule operation
+				rescheduleOperation();
 				break;
 				
 			case 10: 
-				//showAllTreatment
+				showAllTreatment();
 				break;
 				
 			case 11: 
-				//see al organs
+				viewAllOrgan();
 				break;
 				
 			case 12: 
-				//see characteristics of an organ
+				viewCharacteristicsOfAnOrgan();
 				break;
-			
+				
+			case 13:
+				checkCompatibility();
+				break;
+				
+			case 14:
+				//XML
+				System.out.println("You will generate a XML file. The file will be of a DOCTOR(1) or a PATIENT (2)");
+				System.out.println("The doctor option will create XML file with your information as a doctor");
+				int choice=0;
+				while (choice != 1 && choice != 2) {
+					System.out.print("Choose 1 for Doctor or 2 for Patient: ");
+					choice = Integer.parseInt(r.readLine());
+					if (choice != 1 && choice != 2) {
+						System.out.println("Invalid option. Please, choose 1 or 2.");
+					}
+				}
+				if (choice == 1) {
+					saveDoctorToXMLFile(doctor);
+					System.out.println("Doctor's data saved to XML successfully.");
+				} else {
+					Patient selectedPatient = selectPatientFromList();
+					if (selectedPatient != null) {
+						savePatientToXMLFile(selectedPatient);
+					}		
+					if (selectedPatient == null) {
+						System.out.println("No patient found with that ID.");
+					} else {
+						savePatientToXMLFile(selectedPatient);
+						System.out.println("Patient's data saved to XML successfully.");
+					}
+				}
+				
+				break;
+				
+			case 15:
+				//download xml
+				List<String> filesInProyect = getXMLFilenamesInFolderProyect();
+				downloadXML(filesInProyect);
+				
+				break;
+					
+			case 16:
+				System.out.println("You will generate a HTML file. The file will be of a DOCTOR(1) or a PATIENT (2)");
+				System.out.println("The doctor option will create HTML file with your information as a doctor");
+				int choiceHTML=0;
+				while (choiceHTML != 1 && choiceHTML != 2) {
+					System.out.print("Choose 1 for Doctor or 2 for Patient: ");
+					choiceHTML = Integer.parseInt(r.readLine());
+					if (choiceHTML != 1 && choiceHTML != 2) {
+						System.out.println("Invalid option. Please, choose 1 or 2.");
+					}
+				}
+				if (choiceHTML == 1) {
+					saveDoctorToHTMLFile(doctor);
+					System.out.println("Doctor's data saved to HTML successfully.");
+				} else {
+					Patient selectedPatient = selectPatientFromList();
+					if (selectedPatient != null) {
+						savePatientToHTMLFile(selectedPatient); 
+					}				
+					if (selectedPatient == null) {
+						System.out.println("No patient found with that ID.");
+					} else {
+						savePatientToHTMLFile(selectedPatient);
+						System.out.println("Patient's data saved to HTML successfully.");
+					}
+				}
+				break;
+				
+			/*case 17:
+				// download HTML
+				List<String> htmlFiles = getHTMLFilenamesInFolderProyect();
+				downloadHTML(htmlFiles);
+				break;
+			*/	
 			case 0:
 				whileDoctorVariable=0;
 				connectionManager.closeConnection();	
@@ -171,14 +261,23 @@ public class MenuDoctor {
 	
 	
 	
-	private static void deletePatient() {
-		System.out.print("You will delete a patient from the database.");
-		/*
-		 * search the patient by name then get the list of those names,
-		 * then print their info
-		 * then the doctor knows his id
-		 * then doctor select the id to delete the patient
-		 */
+	private static void deletePatient() throws IOException {		
+		System.out.println("Enter the name of the patient you want to delete:");
+	    String name = r.readLine();
+
+	    List<Patient> patientsFound = patientMan.getPatientsByName(name);
+	    if (patientsFound.isEmpty()) {
+	        System.out.println("No patients found with the name: " + name);
+	        return;
+	    }
+	    System.out.println("patients found :");
+	    for (Patient p : patientsFound) {
+	        System.out.println("ID: " + p.getId() + ", Name: " + p.getName() + ", DOB: " + p.getDob() + ", Email: " + p.getEmail() + ", Phone: " + p.getTelephone());
+	    }
+	    System.out.println("Enter the ID of the patient to delete:");
+	    int idToDelete = Integer.parseInt(r.readLine());
+	    patientMan.deletePatient(idToDelete);
+	    System.out.println("Patient deleted successfully.");
 		
 	}
 	
@@ -215,7 +314,7 @@ public class MenuDoctor {
 	    if (!newGender.trim().isEmpty()) {
 	    	doctor.setGender(newGender);
 	    }
-	    //We will not modify the email
+	    //we will not modify the email
 	    System.out.println("Current telephone number: " + doctor.getTelephone());
 	    System.out.print("Insert the new telephone number: ");
 	    String telephone = r.readLine();
@@ -233,8 +332,8 @@ public class MenuDoctor {
 	
 	
 	
-	//see only the nurses can be available
-	private static void seeAvailabilityNurses() {
+	//see only the nurses that are available
+	private static void seeAvailableNurses() {
 		List<Nurse> availableNurses = nurseMan.getAvailableNurses(); //gets only the available nurses with availability=1
 	    if (availableNurses == null || availableNurses.isEmpty()) {
 	        System.out.println("There are no available nurses at the moment.");
@@ -246,8 +345,7 @@ public class MenuDoctor {
 	    }
 	}
 	
-	
-	
+		
 	private static void assignNurseToOperation() throws NumberFormatException, IOException {
         System.out.println("Insert the ID of the nurse:");
         int nurseId = Integer.parseInt(r.readLine());
@@ -335,7 +433,7 @@ public class MenuDoctor {
 	    
 	}
 	
-	private void showAllTreatment() {
+	private static void showAllTreatment() {
 		List<Treatment> treatments = treatmentMan.getAllTreatment(); 
 	    if (treatments == null || treatments.isEmpty()) {
 	        System.out.println("There are no treatments available at this moment.");
@@ -348,7 +446,7 @@ public class MenuDoctor {
 	}
 
 	
-	private void viewAllOrgan() {
+	private static void viewAllOrgan() {
 		List<Organ> organs = organMan.getAllOrgans();
 	    if (organs == null || organs.isEmpty()) {
 	        System.out.println("There are no organs in the system.");
@@ -360,7 +458,7 @@ public class MenuDoctor {
 	    }
 	}
 	
-	private void viewCharacteristicsOfAnOrgan() {
+	private static void viewCharacteristicsOfAnOrgan() {
 	    try {
 	        System.out.print("Introduce the ID of the organ your want to know its characteristics");
 	        Integer organId = Integer.parseInt(r.readLine());
@@ -455,6 +553,148 @@ public class MenuDoctor {
 	private static int getRandomNumber(int min, int max) {
 	    return new Random().nextInt(max - min + 1) + min;
 	}
+	
+	private static Patient selectPatientFromList() throws IOException {
+		List<Patient> patients = patientMan.getAllPatients(); 
+		if (patients.isEmpty()) {
+			System.out.println("No patients available in the database.");
+			return null;
+		}
+		System.out.println("List of all patients:");
+		for (Patient p : patients) {
+			System.out.println("ID: " + p.getId() + ", Name: " + p.getName() + " , Email: " + p.getEmail());
+		}
+		System.out.print("Enter the ID of the patient you want to export: ");
+		int patientId = Integer.parseInt(r.readLine());
+		return patientMan.getPatientByID(patientId);
+	}
+
+	
+	
+	
+	
+	    
+	private static void saveDoctorToXMLFile(Doctor doctor ) throws NumberFormatException, IOException {
+			System.out.println(" Generating XML of the Doctor: ");
+			System.out.println(doctor.toString());
+			xmlMan.doctor2XML(doctor);
+	}
+	
+	private static void saveDoctorToHTMLFile(Doctor doctor ) throws NumberFormatException, IOException {
+		System.out.println(" Generating HTML of the Doctor: ");
+		System.out.println(doctor.toString());
+		xmlMan.doctor2HTML(doctor);
+}
+		
+	private static void savePatientToXMLFile(Patient patient ) throws NumberFormatException, IOException {
+		System.out.println(" Generating XML of the Patient: ");
+		System.out.println(patient.toString());
+		xmlMan.patient2XML(patient);
+}
+	
+	private static void savePatientToHTMLFile(Patient patient ) throws NumberFormatException, IOException {
+		System.out.println(" Generating HTML of the Patient: ");
+		System.out.println(patient.toString());
+		xmlMan.patient2HTML(patient);
+}
+	
+	
+	private static List<String> getXMLFilenamesInFolderProyect() {
+		List<String> xmlFiles = new ArrayList<>();
+		File folder = new File("./xmls");
+		if (folder.isDirectory()) {
+			File[] files = folder.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isFile() && file.getName().toLowerCase().endsWith(".xml")) {
+						xmlFiles.add(file.getName());
+					}
+				}
+			}
+		}
+		return xmlFiles;
+	}
+	
+	 private static void downloadXML(List<String> xmlFile) throws NumberFormatException, IOException {
+	    	int cont = 1;
+	    	System.out.println(" -Which file do you want to load: ");
+	    	Iterator<String> it = xmlFile.iterator();
+	    	while(it.hasNext()) {
+	    		System.out.println("   " + cont + ". " + it.next());
+	    		cont++;
+	    	}
+	    	Integer option=0;
+	    		try {
+	    	 	do {
+	    	 		System.out.println(" Choose a file given: ");
+	        		option = Integer.parseInt(r.readLine())-1;
+	        		if(option < 0 || option >= xmlFile.size()) {
+	        		    System.out.println(" ERROR: Invalid option.");
+	        		}
+	        	} while(option < 0 );	
+	    		File fileName = new File("./xmls/" + xmlFile.get(option));
+	    		
+	    	   	if(xmlFile.get(option).endsWith("-Patient.xml") ){
+	        		Patient patient = xmlMan.XML2patient(fileName);
+	        		patientMan.addPatient(patient);
+	        		}
+	        	if(xmlFile.get(option).endsWith("-Doctor.xml")) {
+	        		Doctor doctor = xmlMan.XML2doctor(fileName);
+	        		doctorMan.addDoctor(doctor);
+	    		}    
+
+	    }catch (NumberFormatException e) {
+	    	e.printStackTrace();
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+	}
+	
+	 private static List<String> getHTMLFilenamesInFolderProyect() {
+			List<String> htmlFiles = new ArrayList<>();
+			File folder = new File("./xmls");	//in our case we save everything in our file xmls
+			if (folder.isDirectory()) {
+				File[] files = folder.listFiles();
+				if (files != null) {
+					for (File file : files) {
+						if (file.isFile() && file.getName().toLowerCase().endsWith(".html")) {
+							htmlFiles.add(file.getName());
+						}
+					}
+				}
+			}
+			return htmlFiles;
+		}
+
+		private static void downloadHTML(List<String> htmlFiles) throws NumberFormatException, IOException {
+			int cont = 1;
+			System.out.println(" -Which HTML file do you want to load: ");
+			for (String name : htmlFiles) {
+				System.out.println("   " + cont + ". " + name);
+				cont++;
+			}
+			int option = -1;
+			do {
+				System.out.print("Choose a file: ");
+				option = Integer.parseInt(r.readLine()) - 1;
+				if (option < 0 || option >= htmlFiles.size()) {
+					System.out.println("ERROR: Invalid option.");
+				}
+			} while (option < 0 || option >= htmlFiles.size());
+
+			System.out.println("You selected: " + htmlFiles.get(option));
+			//this could be the code for HTML but HTML is only for view not for importing
+			//we need to use something else than JAXB
+
+		}
+
+	
+		
+	
+	
+	
+	
+	
 	
 	
 	

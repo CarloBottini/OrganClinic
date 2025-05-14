@@ -11,8 +11,8 @@ public interface XMLManager {
 	public File doctor2XML(Doctor d);
 	public Doctor XML2doctor(File Fxml);
 	public Patient XML2patient(File Fxml);
-	public void patient2Html(Patient p);
-	public void doctor2Html(Doctor d);
+	public void patient2HTML(Patient p);
+	public void doctor2HTML(Doctor d);
 
 	
 	

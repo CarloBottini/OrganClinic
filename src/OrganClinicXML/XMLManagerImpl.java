@@ -87,7 +87,7 @@ public class XMLManagerImpl implements XMLManager{
 	}
 	
 	@Override
-	public void patient2Html(Patient patient) {
+	public void patient2HTML(Patient patient) {
 		File f= patient2XML(patient);
 		TransformerFactory transformerFactory= TransformerFactory.newInstance();
 		try {
@@ -101,7 +101,7 @@ public class XMLManagerImpl implements XMLManager{
 	
 	
 	@Override
-	public void doctor2Html(Doctor d) {
+	public void doctor2HTML(Doctor d) {
 		File f= doctor2XML(d);
 		TransformerFactory transformerFactory= TransformerFactory.newInstance();
 		try {
