@@ -16,18 +16,10 @@ public class JDBCPatientManager implements PatientManager{
 	
 	private JDBCManager manager;
 
-	
-
 	public JDBCPatientManager(JDBCManager m) {
 		this.manager = m;
 	}
 	
-	
-	//TODO METODOS ADD PATIENT DELETE NAD MODIFY PATIENT
-	//TODO METODOS GETPATIENTBYid and getpatientbyname
-	
-	
-	//TODO We will need to put Override wehn the interfaces are done
 	@Override
 	public void addPatient(Patient p) {
 		try {//it is not necessary to put the id, because it is autoincremented

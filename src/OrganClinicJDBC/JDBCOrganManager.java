@@ -19,7 +19,7 @@ public class JDBCOrganManager implements OrganManager {
 		this.manager=m;
 	}
 	
-	
+	@Override
 	public void addOrgan(Organ organ) {
 		try {//it is not necessary to put the id, because it is autoincremented
 			String sql = "INSERT INTO Organ (gender, type, size, quality, bloodType) VALUES (?, ?, ?, ?, ?)";
@@ -38,6 +38,7 @@ public class JDBCOrganManager implements OrganManager {
 		}	
 	}
 	
+	@Override
 	public void modifyOrgan(Organ o) {
 		try {
 			String query = "UPDATE Organ SET gender= ?, type= ?, size= ?, quality= ?, bloodType= ? WHERE id=?";
@@ -59,6 +60,7 @@ public class JDBCOrganManager implements OrganManager {
 			}	
 	}
 	
+	@Override
 	public void deleteOrgan(Integer id) {
 		try {
 			String st= "DELETE FROM Organ WHERE id= ?";
@@ -77,6 +79,7 @@ public class JDBCOrganManager implements OrganManager {
 		}
 	}
 	
+	@Override
 	public Organ getOrganByID(Integer id) {
 		try {
 			String sql = "SELECT * FROM Organ WHERE id = " + id;
@@ -92,6 +95,7 @@ public class JDBCOrganManager implements OrganManager {
 		return null;
 	}
 	
+	@Override
 	public List<Organ> getAllOrgans() {
 	    List<Organ> allOrgans = new ArrayList<Organ>();
 	    try {

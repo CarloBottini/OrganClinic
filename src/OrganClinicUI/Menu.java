@@ -25,13 +25,16 @@ public class Menu {
 		jdbcManager = new JDBCManager();
 		userManager= new JPAUserManager();
 		
-	
 		userManager.connect();
-		int choice=0;
-		try {
-			do {
-				System.out.println("Welcome to the organ clinic");
-				System.out.println("choose one of the following options");
+		int variableWhileInitial=1;
+
+		while (variableWhileInitial!=0) {	
+
+			int choice=0;
+			try {
+				do {
+				System.out.println("Welcome to the ORGAN CLINIC PROGRAM!!!");
+				System.out.println("Choose one of the following options");
 				System.out.println("1.Login");
 				System.out.println("2.Sign-up");
 				System.out.println("0.exit");
@@ -46,16 +49,20 @@ public class Menu {
 					break;
 				case 0:
 					System.out.println("Closing the program. See you soon....");
+	                variableWhileInitial=0;
 
 					jdbcManager.closeConnection();
 					userManager.disconnect();
 					break;
+				 default:
+		                System.out.println("Option not available. Please, insert again.");
 				}
 				
 			}while(choice!=0);
 			
-		}catch(Exception e) {
-			e.printStackTrace();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	private static void login() {

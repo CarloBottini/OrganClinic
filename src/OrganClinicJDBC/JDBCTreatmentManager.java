@@ -15,6 +15,8 @@ public class JDBCTreatmentManager implements TreatmentManager{
 	public JDBCTreatmentManager(JDBCManager m) {
 		this.manager= m;
 	}
+	
+	@Override
 	public void addTreatment(Treatment treatment) {
 		try {//it is not necessary to put the id, because it is autoincremented
 			String sql = "INSERT INTO Treatment (name, type, duration) VALUES (?, ?, ?)";
@@ -31,6 +33,7 @@ public class JDBCTreatmentManager implements TreatmentManager{
 		}	
 	}
 	
+	@Override
 	public void modifyTreatment(Treatment treatment) {
 		try {
 			String query = "UPDATE Treatment SET name= ?, type= ?, duration= ?  WHERE id=?";
@@ -50,6 +53,7 @@ public class JDBCTreatmentManager implements TreatmentManager{
 			}	
 	}
 	
+	@Override
 	public void deleteTreatment(Integer id) {
 		try {
 			String st= "DELETE FROM Treatment WHERE id= ?";
@@ -68,6 +72,7 @@ public class JDBCTreatmentManager implements TreatmentManager{
 		}
 	}
 	
+	@Override
 	public List<Treatment> getAllTreatment(){
 		List<Treatment> allTreatments = new ArrayList<Treatment>();
 		try {
@@ -81,7 +86,6 @@ public class JDBCTreatmentManager implements TreatmentManager{
 				String name= rs.getString("name");
 				String type = rs.getString("type");
 				Integer duration = rs.getInt("duration");
-				
 				
 				Treatment t= new Treatment(id,name,type,duration);
 				allTreatments.add(t);

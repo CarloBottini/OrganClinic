@@ -18,6 +18,8 @@ private JDBCManager manager;
 	public JDBCNurseManager(JDBCManager m) {
 		this.manager = m;
 	}
+	
+	@Override
 	public Nurse getNurseByID(Integer id) {
 		try {
 			String sql = "SELECT * FROM Nurse WHERE id = " + id;
@@ -32,6 +34,8 @@ private JDBCManager manager;
 		}
 		return null;
 	}
+	
+	@Override
 	public void deleteNurse(Integer id) {
 		try {
 			String st= "DELETE FROM Nurse WHERE id= ?";
@@ -49,6 +53,8 @@ private JDBCManager manager;
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
 	public void addNurse(Nurse n) {
 		try {//it is not necessary to put the id, because it is autoincremented
 			String sql = "INSERT INTO Nurse (name,availability) VALUES (?,?)";
@@ -66,6 +72,7 @@ private JDBCManager manager;
 		}	
 	}
 	
+	@Override
 	public List<Nurse> getAllNurses(){
 		List<Nurse> allNurse = new ArrayList<Nurse>();
 		try {
@@ -90,8 +97,7 @@ private JDBCManager manager;
 		return allNurse;
 		}
 		
-	//TODO remember that now there is a list of operation
-	
+	@Override	
 	public List<Nurse> getAvailableNurses() {
 		List<Nurse> availableNurses = new ArrayList<Nurse>();
 	    try {

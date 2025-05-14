@@ -21,6 +21,7 @@ private JDBCManager manager;
 	}
 	
 	//it will be similar to addOperation
+	@Override
 	public void scheduleOperation(Operation operation) {
 		try {//it is not necessary to put the id, because it is autoincremented
 			String sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) VALUES (?, ?, ?, ?, ?)";
@@ -40,7 +41,7 @@ private JDBCManager manager;
 	}
 	
 	
-	
+	  @Override
 	  public void rescheduleOperation(Operation operation) {
 		try {
 			String query = "UPDATE Operation SET isDone= ?, date= ?, patient_id= ?, treatment_id= ?, doctor_id= ? WHERE id=?";
@@ -62,6 +63,7 @@ private JDBCManager manager;
 	}
 	
 	  //we need to insert into HAS but also update the nurse availability
+	  @Override
 	  public void assignedNurseToOperation(Integer nurse_id, Integer operation_id) {
 		  try {
 			  //HAS table
@@ -88,6 +90,7 @@ private JDBCManager manager;
 		  }
 	  
 	//DELETE HAS and nurse availability set TRUE
+	  	@Override
 		public void unassignedNurseToOperation(Integer nurse_id, Integer operation_id) {
 		    try {
 		        String template = "DELETE FROM Has WHERE nurse_id = ? AND operation_id = ?";
@@ -109,6 +112,7 @@ private JDBCManager manager;
 		    }
 		}
 
+	  	@Override
 		public List<Operation> getOperationsByPatientId(Integer patientId) {
 		    List<Operation> operations = new ArrayList<>();
 		    try {
@@ -135,7 +139,7 @@ private JDBCManager manager;
 		    return operations;
 		}
 		
-		
+	  	@Override
 		public Operation getOperationByID(Integer operationId) {
 			Operation operation = null;
 		    try {

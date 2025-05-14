@@ -89,11 +89,8 @@ public class MenuDoctor {
 		System.out.println("14) GENERATE A XML FILE");
 		System.out.println("15) DOWNLOAD A XML INTO THE PROGRAM");
 		System.out.println("16) GENERATE A HTML FILE");
-		System.out.println("17) DOWNLOAD A HTML INTO THE PROGRAM");
-		
-		//later we will TODO the XML CASES
-		
-		
+		//System.out.println("17) DOWNLOAD A HTML INTO THE PROGRAM");
+			
 		System.out.println("0) EXIT");
 		
 		int doctorChoice = Integer.parseInt(r.readLine());
@@ -190,6 +187,7 @@ public class MenuDoctor {
 				break;
 					
 			case 16:
+				//HTML
 				System.out.println("You will generate a HTML file. The file will be of a DOCTOR(1) or a PATIENT (2)");
 				System.out.println("The doctor option will create HTML file with your information as a doctor");
 				int choiceHTML=0;
@@ -379,7 +377,7 @@ public class MenuDoctor {
 		System.out.print("Showimg all the doctors: ......");
 	    List<Doctor> doctors = doctorMan.getAllDoctors();
 		for (Doctor d : doctors) {
-	        System.out.println(d); // usa el toString() completo
+	        System.out.println(d); 
 	    }
 	    //so the doctor can select himself or another doctor
 	    System.out.print("Enter doctor ID: ");
@@ -512,7 +510,7 @@ public class MenuDoctor {
 	    	int age = Period.between(dob, LocalDate.now()).getYears();
 
 	        boolean isChild = age < 18;
-	        String organSize = organ.getSize().toUpperCase(); //devuelve "CHILD" or "ADULT"
+	        String organSize = organ.getSize().toUpperCase(); //return "CHILD" or "ADULT"
 
 	        if (isChild && organSize.equalsIgnoreCase("CHILD")) {
 	            percentCompatibility = getRandomNumber(90, 99);
@@ -570,14 +568,10 @@ public class MenuDoctor {
 	}
 
 	
-	
-	
-	
-	    
 	private static void saveDoctorToXMLFile(Doctor doctor ) throws NumberFormatException, IOException {
-			System.out.println(" Generating XML of the Doctor: ");
-			System.out.println(doctor.toString());
-			xmlMan.doctor2XML(doctor);
+		System.out.println(" Generating XML of the Doctor: ");
+		System.out.println(doctor.toString());
+		xmlMan.doctor2XML(doctor);
 	}
 	
 	private static void saveDoctorToHTMLFile(Doctor doctor ) throws NumberFormatException, IOException {
@@ -688,14 +682,6 @@ public class MenuDoctor {
 
 		}
 
-	
-		
-	
-	
-	
-	
-	
-	
 	
 	
 }

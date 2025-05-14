@@ -21,7 +21,7 @@ public class JDBCDoctorManager implements DoctorManager{
 		this.manager=m;
 	}
 
-	
+	@Override
 	public List<Doctor> getAllDoctors(){
 		List<Doctor> doctors = new ArrayList<Doctor>();
 		try {
@@ -47,7 +47,7 @@ public class JDBCDoctorManager implements DoctorManager{
 		return doctors;
 	}
 	
-	
+	@Override
 	public void addDoctor (Doctor doc) {
 		try {//it is not  necessary to put the id because it is autoincremented
 			String template = "INSERT INTO Doctor (name, dob, gender, email, telephone) VALUES (?, ?, ?, ?, ?)";
@@ -65,7 +65,7 @@ public class JDBCDoctorManager implements DoctorManager{
 		}
 	}
 	
-	
+	@Override
 	public Doctor getDoctorByID(Integer id) {
 		try {
 			String sql = "SELECT * FROM Doctor WHERE id = " + id;
@@ -81,7 +81,7 @@ public class JDBCDoctorManager implements DoctorManager{
 		return null;
 	}
 	
-	
+	@Override
 	public Doctor getDoctorByEmail(String email) {
 		try {
 			String sql = "SELECT * FROM Doctor WHERE username = ?";
@@ -99,7 +99,7 @@ public class JDBCDoctorManager implements DoctorManager{
 		return null;
 	}
 	
-	
+	@Override
 	public void modifyDoctor(Doctor doc) {
 		try {
 			String query = "UPDATE Doctor SET name= ?, dob= ?, gender= ?, email= ?, telephone= ? WHERE id=?";
@@ -120,7 +120,7 @@ public class JDBCDoctorManager implements DoctorManager{
 			}	
 	}
 	
-	
+	@Override
 	public void deletePatient (Integer id) {
 		try {
 			String st= "DELETE FROM Doctor WHERE id= ?";

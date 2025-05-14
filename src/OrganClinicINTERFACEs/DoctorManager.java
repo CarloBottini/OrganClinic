@@ -11,6 +11,7 @@ public interface DoctorManager {
 	public Doctor getDoctorByID(Integer id);
 	public Doctor getDoctorByEmail(String email);
 	public void modifyDoctor(Doctor doctor);
+	public void deletePatient(Integer id);
 
 
 	
