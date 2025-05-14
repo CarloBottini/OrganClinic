@@ -3,6 +3,7 @@ package OrganClinicPOJOs;
 import java.io.Serializable;
 import java.sql.Date; //it will helps us later
 import java.util.Objects;
+import OrganClinicXMLUtils.SQLDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Patient")
@@ -24,7 +26,7 @@ public class Patient implements Serializable{
 	private Integer id;
 	@XmlElement
 	private String name;
-	@XmlAttribute
+	@XmlJavaTypeAdapter(SQLDateAdapter.class)
 	private Date dob;
 	@XmlAttribute
 	private String gender;

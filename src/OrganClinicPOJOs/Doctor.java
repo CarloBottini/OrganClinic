@@ -2,20 +2,41 @@ package OrganClinicPOJOs;
 
 import java.sql.Date;
 import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import OrganClinicXMLUtils.SQLDateAdapter;
+
 import java.io.Serializable;
 
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Doctor")
+@XmlType(propOrder= {"name","dob","gender","email","email","telephone"})
 public class Doctor implements Serializable{
 	
 
 	
 	private static final long serialVersionUID = -1687897604850163624L;
 	
+	@XmlTransient
 	private Integer id;
+	@XmlElement
 	private String name;
+	@XmlJavaTypeAdapter(SQLDateAdapter.class)
 	private Date dob;
+	@XmlAttribute
 	private String gender;
+	@XmlElement
 	private String email;
+	@XmlElement
 	private Integer telephone;
 	
 	
