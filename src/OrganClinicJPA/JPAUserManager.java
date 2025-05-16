@@ -66,7 +66,7 @@ public class JPAUserManager implements UserManager{
 		@Override
 		public Role getRole(Integer id) {
 			// TODO Auto-generated method stub
-			Query q = em.createNativeQuery("SELECT * FROM roles where id="+id, Role.class);
+			Query q = em.createNativeQuery("SELECT * FROM roles WHERE id="+id, Role.class);
 			Role r = (Role) q.getSingleResult();
 			
 			return r;
@@ -84,7 +84,7 @@ public class JPAUserManager implements UserManager{
 		@Override
 		public User getUser(String email) {
 			// TODO Auto-generated method stub
-			Query q = em.createNativeQuery("SELECT * FROM users where email="+email, User.class);
+			Query q = em.createNativeQuery("SELECT * FROM users WHERE email="+email, User.class);
 			User u = (User) q.getSingleResult();
 			
 			return u;
@@ -93,7 +93,7 @@ public class JPAUserManager implements UserManager{
 		public User checkPassword(String email,String pw) {
 			User u= null;
 			
-			Query q = em.createNativeQuery("SELECT * FROM users where email= ?AND password= ?",User.class);
+			Query q = em.createNativeQuery("SELECT * FROM users WHERE email= ? AND password= ?",User.class);
 			q.setParameter(1, email);
 			try {
 				MessageDigest md= MessagestDigest.getInstance("MD5");

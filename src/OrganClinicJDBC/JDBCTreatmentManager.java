@@ -45,7 +45,7 @@ public class JDBCTreatmentManager implements TreatmentManager{
 
 	        prep.executeUpdate();
 	        prep.close();
-	        System.out.println("Organ with ID " + treatment.getId() + " updated successfully.");
+	        System.out.println("Treatment with ID " + treatment.getId() + " updated successfully.");
 	        
 		}catch(Exception e){
 	        System.out.println("Error in the database");

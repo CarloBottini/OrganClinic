@@ -16,7 +16,6 @@ import javax.persistence.TableGenerator;
 
 @Entity 
 @Table(name="users")
-
 public class User implements Serializable {
 
 
@@ -25,7 +24,6 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(generator = "users")
 	@TableGenerator(name = "users", table = "sqlite_sequence", pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "users")
-	
 	private Integer id;
 	private String email;
 	@Lob
@@ -57,6 +55,9 @@ public class User implements Serializable {
 		this.password = password;
 		this.role = role;
 	}
+	
+	public User() {
+    }
 
 	@Override
 	public int hashCode() {

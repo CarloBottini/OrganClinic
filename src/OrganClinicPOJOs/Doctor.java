@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Doctor")
-@XmlType(propOrder= {"name","dob","gender","email","email","telephone"})
+@XmlType(propOrder= {"name","dob","gender","email","telephone"})
 public class Doctor implements Serializable{
 	
 

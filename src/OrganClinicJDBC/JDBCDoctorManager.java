@@ -83,20 +83,33 @@ public class JDBCDoctorManager implements DoctorManager{
 	
 	@Override
 	public Doctor getDoctorByEmail(String email) {
-		try {
-			String sql = "SELECT * FROM Doctor WHERE username = ?";
-			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1,email);
-			ResultSet rs= prep.executeQuery();
-			rs.next();
-			Doctor doc = new Doctor (rs.getInt("id"), rs.getString("name"), rs.getDate("dob"), rs.getString("gender"), rs.getString("email"), rs.getInt("telephone"));
-			prep.close();
-			return doc;
-		}catch (Exception e) {
-			System.out.println("Error in the database while getting the doctor by email");
-			e.printStackTrace();
-		}
-		return null;
+		Doctor doc = null;
+	    try {
+	        String sql = "SELECT * FROM Doctor WHERE email = ?";
+	        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+	        prep.setString(1, email);
+	        ResultSet rs = prep.executeQuery();
+	        if (rs.next()) {
+	            doc = new Doctor(
+	                rs.getInt("id"),
+	                rs.getString("name"),
+	                rs.getDate("dob"),
+	                rs.getString("gender"),
+	                rs.getString("email"),
+	                rs.getInt("telephone")
+	            );
+	        } else {
+	            System.out.println("No doctor found with that email.");
+	        }
+
+	        rs.close();
+	        prep.close();
+
+	    } catch (Exception e) {
+	        System.out.println("Error in the database while getting the doctor by email");
+	        e.printStackTrace();
+	    }
+	    return doc;
 	}
 	
 	@Override

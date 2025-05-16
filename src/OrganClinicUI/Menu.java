@@ -101,9 +101,12 @@ public class Menu {
 			byte[]digest= md.digest();
 			
 			System.out.println("choose one role by inserting the number: ");
-			//TODO mirar en la tabla tables cual es role 1= y role 2=
+			//role 1 =patient role 2= doctor
 			List<Role> roles= userManager.getRoles();
-			System.out.println(roles.toString());
+			System.out.println("Insert 1 for Patient and 2 for Doctor");
+			
+			
+			
 			Integer role= Integer.parseInt(reader.readLine());
 			
 			Role r= userManager.getRole(role);

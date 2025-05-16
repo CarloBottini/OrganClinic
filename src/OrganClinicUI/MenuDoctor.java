@@ -237,19 +237,62 @@ public class MenuDoctor {
 		System.out.println("Please, add the following patient's information.");
 		System.out.println("Patient NAME: ");
 		String name = r.readLine();
-		System.out.println("Patient Date Of Birth (yyyy-mm-dd: ");
-		String dobStr = r.readLine();
-	    Date dob = Date.valueOf(dobStr);
-	    System.out.print("Gender: ");
-	    String gender = r.readLine();
+		System.out.print("Patient Date Of Birth (yyyy-mm-dd): ");
+	    String dobStr = r.readLine();
+	    Date dob = null;
+	    try {
+	        dob = Date.valueOf(dobStr);
+	    } catch (IllegalArgumentException e) {
+	        System.out.println("Invalid date format. Use yyyy-mm-dd.");
+	        return;
+	    }
+	    String gender = "";
+	    while (true) {
+		    System.out.print("Gender M for male and F for female: ");
+	        gender = r.readLine().trim().toUpperCase();
+	        if (gender.equals("M") || gender.equals("F")) {
+	            break;
+	        } else {
+	            System.out.println("Invalid input. Please enter 'M' or 'F'.");
+	        }
+	    }
 	    System.out.print("Organ failure: ");
 	    String organFailure = r.readLine();
 	    System.out.print("Email: ");
 	    String email = r.readLine();
 	    System.out.print("Telephone: ");
-	    int telephone = Integer.parseInt(r.readLine());
-	    System.out.print("Blood type: ");
-	    String bloodType = r.readLine();
+	    int telephone;
+	    try {
+	        telephone = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid telephone number.");
+	        return;
+	    }
+	    String[] bloodTypes = {
+	            "Positive_B", "Positive_AB", "Positive_A", "Positive_0",
+	            "Negative_B", "Negative_AB", "Negative_A", "Negative_0"
+	        };
+
+	        System.out.println("Select Blood Type:");
+	        for (int i = 0; i < bloodTypes.length; i++) {
+	            System.out.println((i + 1) + ". " + bloodTypes[i]);
+	        }
+
+	        String bloodType = "";
+	        while (true) {
+	            System.out.print("Enter option (1-8): ");
+	            try {
+	                int choice = Integer.parseInt(r.readLine());
+	                if (choice >= 1 && choice <= bloodTypes.length) {
+	                    bloodType = bloodTypes[choice - 1];
+	                    break;
+	                } else {
+	                    System.out.println("Please enter a number between 1 and " + bloodTypes.length + ".");
+	                }
+	            } catch (NumberFormatException e) {
+	                System.out.println("Invalid input. Please enter a number.");
+	            }
+	        }
 
 	    Patient newPatient = new Patient(name, dob, gender, organFailure, email, telephone, bloodType);
 	    

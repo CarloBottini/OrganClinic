@@ -2,6 +2,7 @@ package OrganClinicPOJOs;
 
 import java.io.Serializable;
 import java.sql.Date; //Date from sql so it will be correct later
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Operation implements Serializable{
 	private Integer patient_id;
 	private Integer treatment_id;
 	private Integer doctor_id;
-	private List<Nurse> listNurse;
+	private List<Nurse> listNurse = new ArrayList<>();
 	
 	public Operation(Integer id, Boolean isDone, Date date, Integer patient_id, Integer treatment_id, Integer doctor_id, List<Nurse> listNurse) {
 		super();
