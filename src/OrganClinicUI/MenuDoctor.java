@@ -56,7 +56,6 @@ public class MenuDoctor {
 	private static UserManager userMan;
 	private static XMLManager xmlMan;
 
-
 	public static void menuDoctor(String email) throws NumberFormatException, IOException {
 		connectionManager= new JDBCManager();
 		doctorMan = new JDBCDoctorManager(connectionManager);
