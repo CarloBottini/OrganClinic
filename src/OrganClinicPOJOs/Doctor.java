@@ -49,6 +49,18 @@ public class Doctor implements Serializable{
 		this.email = email;
 		this.telephone = telephone;
 	}
+	
+
+	
+	public Doctor(String name, Date dob, String gender, String email, Integer telephone) {
+		super();
+		this.name = name;
+		this.dob = dob;
+		this.gender = gender;
+		this.email = email;
+		this.telephone = telephone;
+	}
+
 
 	public Integer getId() {
 		return id;

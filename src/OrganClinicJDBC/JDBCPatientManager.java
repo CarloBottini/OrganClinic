@@ -89,18 +89,31 @@ public class JDBCPatientManager implements PatientManager{
 	
 	@Override
 	public Patient getPatientByID(Integer id) {
+		Patient patient = null;
 		try {
-			String sql = "SELECT * FROM Patient WHERE id = " + id;
-			Statement st = manager.getConnection().createStatement();
-			ResultSet rs= st.executeQuery(sql);
-			rs.next();
-			Patient p = new Patient (rs.getInt("id"), rs.getString("name"), rs.getDate("dob"),rs.getString("gender"), rs.getString("organFailure"),rs.getString("email"),rs.getInt("telephone"), rs.getString("bloodType"));
-			return p;
-		}catch(Exception e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}
-		return null;
+	        String sql = "SELECT * FROM Patient WHERE id = " + id;
+	        Statement st = manager.getConnection().createStatement();
+	        ResultSet rs = st.executeQuery(sql);
+	        if (rs.next()) {
+	            int patientId = rs.getInt("id");
+	            String name = rs.getString("name");
+	            String dobString = rs.getString("dob");
+	            Date dob = Date.valueOf(dobString);  //Maybe is the conversion form sql
+	            String gender = rs.getString("gender");
+	            String organFailure = rs.getString("organFailure");
+	            String email = rs.getString("email");
+	            int telephone = rs.getInt("telephone");
+	            String bloodType = rs.getString("bloodType");
+
+	            patient= new Patient(patientId, name, dob, gender, organFailure, email, telephone, bloodType);
+	        }
+	        rs.close();
+	        st.close();
+	    } catch (Exception e) {
+	        System.out.println("Error in the database");
+	        e.printStackTrace();
+	    }
+	    return patient;
 	}
 	
 	

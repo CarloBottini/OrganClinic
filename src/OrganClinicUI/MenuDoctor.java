@@ -68,10 +68,12 @@ public class MenuDoctor {
 		userMan= new JPAUserManager();
 		xmlMan= new XMLManagerImpl();
 		
-		System.out.println("Welcome Doctor! We are thrilled with your excellent work! Choose one of the following options: ");
+		System.out.println("Welcome Doctor! We are thrilled with your excellent work! ");
 		int whileDoctorVariable=1;
 		Doctor doctor= doctorMan.getDoctorByEmail(email);
 		while(whileDoctorVariable!=0) {
+		System.out.println("");
+		System.out.println("Choose one of the following options:");
 		System.out.println("1) ADD NEW PATIENT INTO THE DATABASE");
 		System.out.println("2) DELETE A PATIENT FROM THE DATABASE");
 		System.out.println("3) SEE DOCTOR'S PROFILE");
@@ -500,7 +502,7 @@ public class MenuDoctor {
 	
 	private static void viewCharacteristicsOfAnOrgan() {
 	    try {
-	        System.out.print("Introduce the ID of the organ your want to know its characteristics");
+	        System.out.print("Introduce the ID of the organ your want to know its characteristics: ");
 	        Integer organId = Integer.parseInt(r.readLine());
 	        Organ organ = organMan.getOrganByID(organId);
 
