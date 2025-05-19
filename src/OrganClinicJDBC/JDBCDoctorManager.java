@@ -134,7 +134,7 @@ public class JDBCDoctorManager implements DoctorManager{
 	}
 	
 	@Override
-	public void deletePatient (Integer id) {
+	public void deleteDoctor (Integer id) {
 		try {
 			String st= "DELETE FROM Doctor WHERE id= ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(st);
