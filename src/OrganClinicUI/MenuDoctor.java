@@ -166,10 +166,7 @@ public class MenuDoctor {
 					saveDoctorToXMLFile(doctor);
 					System.out.println("Doctor's data saved to XML successfully.");
 				} else {
-					Patient selectedPatient = selectPatientFromList();
-					if (selectedPatient != null) {
-						savePatientToXMLFile(selectedPatient);
-					}		
+					Patient selectedPatient = selectPatientFromList();		
 					if (selectedPatient == null) {
 						System.out.println("No patient found with that ID.");
 					} else {
@@ -203,10 +200,7 @@ public class MenuDoctor {
 					saveDoctorToHTMLFile(doctor);
 					System.out.println("Doctor's data saved to HTML successfully.");
 				} else {
-					Patient selectedPatient = selectPatientFromList();
-					if (selectedPatient != null) {
-						savePatientToHTMLFile(selectedPatient); 
-					}				
+					Patient selectedPatient = selectPatientFromList();				
 					if (selectedPatient == null) {
 						System.out.println("No patient found with that ID.");
 					} else {
@@ -351,10 +345,21 @@ public class MenuDoctor {
 	        }
 	    }
 	    System.out.println("Current gender: " + doctor.getGender());
-	    System.out.print("Insert new gender: ");
-	    String newGender = r.readLine();
-	    if (!newGender.trim().isEmpty()) {
-	    	doctor.setGender(newGender);
+	    String newGender;
+	    while (true) {
+	        System.out.print("Insert new gender (M or F): ");
+	        newGender = r.readLine();
+	        if (newGender.trim().isEmpty()) {
+	            //the same gender if we do not write nothing
+	            break;
+	        }
+	        newGender = newGender.trim().toUpperCase();
+	        if (newGender.equals("M") || newGender.equals("F")) {
+	            doctor.setGender(newGender);
+	            break;
+	        } else {
+	            System.out.println("Invalid gender. Please enter 'M' or 'F' (or press ENTER to keep current).");
+	        }
 	    }
 	    //we will not modify the email
 	    System.out.println("Current telephone number: " + doctor.getTelephone());

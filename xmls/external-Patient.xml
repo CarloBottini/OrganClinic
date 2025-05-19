@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient gender="M">
+    <name>Abraham Mateo</name>
+    <dob>1995-10-21</dob>
+    <organFailure>Heart</organFailure>
+    <email>lincon@gmail.com</email>
+    <telephone>172837465</telephone>
+    <bloodType>Negative_B</bloodType>
+</Patient>

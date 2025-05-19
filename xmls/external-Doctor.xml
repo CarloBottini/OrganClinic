@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
-<!DOCTYPE Doctor[
-<!ELEMENT Doctor (name,dob,email,telephone)>
-	<!ATTLIST Doctor gender CDATA #REQUIRED>
-	<!ELEMENT name (#PCDATA)>
-	<!ELEMENT dob (#PCDATA)>
-	<!ELEMENT email (#PCDATA)>
-	<!ELEMENT telephone (#PCDATA)>
-]>
-
-<Doctor gender="MALE">
-	<name>Pedro Garcia</name>
-	<dob>1980-06-15</dob>
-	<email>pedrogarcia@mail.com</email>
-  <telephone>123456789</telephone>
+<Doctor gender="M">
+    <name>carlo</name>
+    <dob>1111-01-01</dob>
+    <email>carlo@mail.com</email>
+    <telephone>1111111111</telephone>
 </Doctor>
-	
-	

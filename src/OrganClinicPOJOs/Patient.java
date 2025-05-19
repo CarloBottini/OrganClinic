@@ -64,6 +64,11 @@ public class Patient implements Serializable{
 		this.bloodType = bloodType;
 	}
 
+	
+	//empty constructor for the XML
+	public Patient() {
+		super();
+	}
 
 
 	public Integer getId() {

@@ -27,7 +27,7 @@ private JDBCManager manager;
 			String sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setBoolean(1, operation.getIsDone());
-			prep.setDate(2, operation.getDate());	
+			prep.setString(2, operation.getDate().toString()); //doing the conversion
 			prep.setInt(3, operation.getPatient_id());
 			prep.setInt(4, operation.getTreatment_id());
 			prep.setInt(5, operation.getDoctor_id());
@@ -47,7 +47,7 @@ private JDBCManager manager;
 			String query = "UPDATE Operation SET isDone= ?, date= ?, patient_id= ?, treatment_id= ?, doctor_id= ? WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
 			prep.setBoolean(1,operation.getIsDone());
-			prep.setDate(2,operation.getDate());
+			prep.setString(2, operation.getDate().toString()); //doing the conversion
 			prep.setInt(3,operation.getPatient_id());
 			prep.setInt(4,operation.getTreatment_id());
 			prep.setInt(5,operation.getDoctor_id());
@@ -116,7 +116,7 @@ private JDBCManager manager;
 		public List<Operation> getOperationsByPatientId(Integer patientId) {
 		    List<Operation> operations = new ArrayList<>();
 		    try {
-		        String sql = "SELECT * FROM Operation WHERE patientId = ?";
+		        String sql = "SELECT * FROM Operation WHERE patient_id = ?";
 		        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 		        prep.setInt(1, patientId);
 		        ResultSet rs = prep.executeQuery();
@@ -124,7 +124,7 @@ private JDBCManager manager;
 		        while (rs.next()) {
 		            Integer id = rs.getInt("id");
 		            Boolean isDone= rs.getBoolean("isDone");
-		            Date date = rs.getDate("date");
+		            Date date = Date.valueOf(rs.getString("date"));
 		            Integer patient_id =rs.getInt("patient_id");
 		            Integer treatment_id = rs.getInt("treatment_id");
 		            Integer doctor_id = rs.getInt("doctor_id");
@@ -151,7 +151,7 @@ private JDBCManager manager;
 		        if (rs.next()) {
 		            Integer id = rs.getInt("id");
 		            Boolean isDone= rs.getBoolean("isDone");
-		            Date date = rs.getDate("date");
+		            Date date = Date.valueOf(rs.getString("date")); //being consistent in the parse between ddbb and program
 		            Integer patient_id =rs.getInt("patient_id");
 		            Integer treatment_id = rs.getInt("treatment_id");
 		            Integer doctor_id = rs.getInt("doctor_id");

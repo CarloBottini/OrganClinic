@@ -27,7 +27,7 @@ public class JDBCPatientManager implements PatientManager{
 
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, p.getName());	
-			prep.setDate(2, p.getDob());
+	        prep.setString(2, p.getDob().toString()); //we pass the date as yyyy-mm-dd
 			prep.setString(3, p.getGender());
 			prep.setString(4, p.getOrganFailure());
 			prep.setString(5, p.getEmail());
@@ -50,7 +50,7 @@ public class JDBCPatientManager implements PatientManager{
 			String query = "UPDATE Patient SET name= ?, dob= ?, gender= ?, organFailure= ?, email= ?, telephone= ?, bloodType= ? WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
 			prep.setString(1,p.getName());
-			prep.setDate(2, p.getDob());
+	        prep.setString(2, p.getDob().toString());
 			prep.setString(3, p.getGender());
 	        prep.setString(4, p.getOrganFailure()); 
 	        prep.setString(5, p.getEmail());
@@ -98,7 +98,14 @@ public class JDBCPatientManager implements PatientManager{
 	            int patientId = rs.getInt("id");
 	            String name = rs.getString("name");
 	            String dobString = rs.getString("dob");
-	            Date dob = Date.valueOf(dobString);  //Maybe is the conversion form sql
+	            Date dob = null;
+	            if (dobString != null && !dobString.trim().isEmpty()) {
+	                try {
+	                    dob = Date.valueOf(dobString);
+	                } catch (IllegalArgumentException e) {
+	                    System.out.println("Date not valid from the database: " + dobString);
+	                }
+	            }
 	            String gender = rs.getString("gender");
 	            String organFailure = rs.getString("organFailure");
 	            String email = rs.getString("email");
@@ -127,11 +134,29 @@ public class JDBCPatientManager implements PatientManager{
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
 			prep.setString(1, email);
 			ResultSet rs =prep.executeQuery();
-			if(rs.next()) {
-				patient= new Patient (rs.getInt("id"), rs.getString("name"), rs.getDate("dob"),rs.getString("gender"), rs.getString("organFailure"),rs.getString("email"),rs.getInt("telephone"), rs.getString("bloodType"));
-			}
-			prep.close();
-			rs.close();
+			if (rs.next()) {
+	            int id = rs.getInt("id");
+	            String name = rs.getString("name");            
+	            String dobString = rs.getString("dob");
+	            Date dob = null;
+	            if (dobString != null && !dobString.trim().isEmpty()) {
+	                try {
+	                    dob = Date.valueOf(dobString);
+	                } catch (IllegalArgumentException e) {
+	                    System.out.println("Date not valid from the database: " + dobString);
+	                }
+	            }
+	            
+	            String gender = rs.getString("gender");
+	            String organFailure = rs.getString("organFailure");
+	            String emailDb = rs.getString("email");
+	            int telephone = rs.getInt("telephone");
+	            String bloodType = rs.getString("bloodType");
+
+	            patient = new Patient(id, name, dob, gender, organFailure, emailDb, telephone, bloodType);
+	        }
+	        prep.close();
+	        rs.close();
 		}catch(Exception e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -149,7 +174,15 @@ public class JDBCPatientManager implements PatientManager{
 	        while (rs.next()) {
 	            Integer id = rs.getInt("id");
 	            String name = rs.getString("name");
-	            Date dob = rs.getDate("dob");
+	            String dobString = rs.getString("dob");
+	            Date dob = null;
+	            if (dobString != null) {
+	                try {
+	                    dob = Date.valueOf(dobString); //expects a  yyyy-MM-dd
+	                } catch (IllegalArgumentException e) {
+	                    System.out.println("Date not valid form the database " + dobString);
+	                }
+	            }            
 	            String gender = rs.getString("gender");
 	            String organFailure = rs.getString("organFailure");
 	            String email = rs.getString("email");
@@ -175,20 +208,30 @@ public class JDBCPatientManager implements PatientManager{
 		try {
 			String sql = "SELECT * FROM Patient WHERE name LIKE ?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setString(1, "%" + name + "%"); //for example: introduce Pe for searching Pedro
+			prep.setString(1, "%" + name + "%"); //for example: introduce Pe for searching Pedro or Persefone
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
-				Patient patient = new Patient(
-					rs.getInt("id"),
-					rs.getString("name"),
-					rs.getDate("dob"),
-					rs.getString("gender"),
-					rs.getString("organFailure"),
-					rs.getString("email"),
-					rs.getInt("telephone"),
-					rs.getString("bloodType")
-				);
-				patients.add(patient);
+				int id = rs.getInt("id");
+	            String patientName = rs.getString("name");
+	            
+	            String dobString = rs.getString("dob");
+	            Date dob = null;
+	            if (dobString != null && !dobString.trim().isEmpty()) {
+	                try {
+	                    dob = Date.valueOf(dobString);
+	                } catch (IllegalArgumentException e) {
+	                    System.out.println("Date not valid from the database: " + dobString);
+	                }
+	            }
+	            
+	            String gender = rs.getString("gender");
+	            String organFailure = rs.getString("organFailure");
+	            String email = rs.getString("email");
+	            int telephone = rs.getInt("telephone");
+	            String bloodType = rs.getString("bloodType");
+
+	            Patient patient = new Patient(id, patientName, dob, gender, organFailure, email, telephone, bloodType);
+	            patients.add(patient);
 			}
 			prep.close();
 			rs.close();
@@ -198,13 +241,8 @@ public class JDBCPatientManager implements PatientManager{
 		}
 		return patients;
 	}
-
-	
 	
 }
 	
 	
 	
-	
-	
-

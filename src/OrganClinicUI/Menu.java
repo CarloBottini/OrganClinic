@@ -57,7 +57,7 @@ public class Menu {
 					System.out.println("Closing the program. See you soon....");
 	                variableWhileInitial=0;
 
-					jdbcManager.closeConnection();
+					connectionManager.closeConnection();
 					userManager.disconnect();
 					break;
 				 default:

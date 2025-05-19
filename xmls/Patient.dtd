@@ -1,0 +1,9 @@
+<!ELEMENT Patient (name, dob, organFailure, email, telephone, bloodType)>
+<!ATTLIST Patient gender CDATA #REQUIRED>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT dob (#PCDATA)>
+<!ELEMENT organFailure (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT telephone (#PCDATA)>
+<!ELEMENT bloodType (#PCDATA)>

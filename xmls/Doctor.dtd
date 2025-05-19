@@ -1,0 +1,7 @@
+<!ELEMENT Doctor (name, dob, email, telephone)>
+<!ATTLIST Doctor gender CDATA #REQUIRED>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT dob (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT telephone (#PCDATA)>

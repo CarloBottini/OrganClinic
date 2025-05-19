@@ -53,7 +53,7 @@ public class JDBCDoctorManager implements DoctorManager{
 			String template = "INSERT INTO Doctor (name, dob, gender, email, telephone) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(template);
 			prep.setString(1, doc.getName());
-			prep.setDate(2, doc.getDob());
+			prep.setString(2, doc.getDob().toString());
 			prep.setString(3, doc.getGender());
 			prep.setString(4, doc.getEmail());
 			prep.setInt(5, doc.getTelephone());
@@ -67,18 +67,29 @@ public class JDBCDoctorManager implements DoctorManager{
 	
 	@Override
 	public Doctor getDoctorByID(Integer id) {
-		try {
-			String sql = "SELECT * FROM Doctor WHERE id = " + id;
-			Statement st = manager.getConnection().createStatement();
-			ResultSet rs= st.executeQuery(sql);
-			rs.next();
-			Doctor doc = new Doctor (rs.getInt("id"), rs.getString("name"), rs.getDate("dob"), rs.getString("gender"), rs.getString("email"), rs.getInt("telephone"));
-			return doc;
-		}catch (Exception e) {
-			System.out.println("Error in the database while getting the doctor by ID");
-			e.printStackTrace();
-		}
-		return null;
+		String sql = "SELECT * FROM Doctor WHERE id = ?";
+	    try (PreparedStatement prep = manager.getConnection().prepareStatement(sql)) {
+	        prep.setInt(1, id);
+	        try (ResultSet rs = prep.executeQuery()) {
+	            if (rs.next()) {
+	                Doctor doc = new Doctor(
+	                    rs.getInt("id"),
+	                    rs.getString("name"),
+	                    rs.getDate("dob"),
+	                    rs.getString("gender"),
+	                    rs.getString("email"),
+	                    rs.getInt("telephone")
+	                );
+	                return doc;
+	            } else {
+	                System.out.println("No doctor found with ID: " + id);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error in the database while getting the doctor by ID");
+	        e.printStackTrace();
+	    }
+	    return null;
 	}
 	
 	@Override
@@ -90,14 +101,24 @@ public class JDBCDoctorManager implements DoctorManager{
 	        prep.setString(1, email);
 	        ResultSet rs = prep.executeQuery();
 	        if (rs.next()) {
-	            doc = new Doctor(
-	                rs.getInt("id"),
-	                rs.getString("name"),
-	                rs.getDate("dob"),
-	                rs.getString("gender"),
-	                rs.getString("email"),
-	                rs.getInt("telephone")
-	            );
+	            int id = rs.getInt("id");
+	            String name = rs.getString("name");
+	            String dobStr = rs.getString("dob");
+	            Date dob = null;
+
+	            if (dobStr != null && !dobStr.trim().isEmpty()) {
+	                try {
+	                    dob = Date.valueOf(dobStr); // convertir solo si es válido
+	                } catch (IllegalArgumentException e) {
+	                    System.out.println("Fecha inválida encontrada en la base de datos: " + dobStr);
+	                }
+	            }
+
+	            String gender = rs.getString("gender");
+	            String emailResult = rs.getString("email");
+	            int telephone = rs.getInt("telephone");
+
+	            doc = new Doctor(id, name, dob, gender, emailResult, telephone);
 	        } else {
 	            System.out.println("No doctor found with that email.");
 	        }
@@ -118,15 +139,15 @@ public class JDBCDoctorManager implements DoctorManager{
 			String query = "UPDATE Doctor SET name= ?, dob= ?, gender= ?, email= ?, telephone= ? WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
 			prep.setString(1,doc.getName());
-			prep.setDate(2, doc.getDob());
+			prep.setString(2, doc.getDob().toString());
 			prep.setString(3, doc.getGender());
 	        prep.setString(4, doc.getEmail());
 	        prep.setInt(5, doc.getTelephone());
 	        prep.setInt(6, doc.getId());
 	        prep.executeUpdate();
-	        prep.close();
 	        System.out.println("Doctor with ID " + doc.getId() + " updated successfully.");
-	        
+	        prep.close();
+
 		}catch(Exception e){
 	        System.out.println("Error in the database while updating the doctor");
 			e.printStackTrace();
