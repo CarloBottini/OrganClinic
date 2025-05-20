@@ -98,10 +98,19 @@ public class MenuPatient {
 	        }
 	    }
 	    System.out.println("Current gender: " + patient.getGender());
-	    System.out.print("Insert new gender: ");
-	    String newGender = r.readLine();
-	    if (!newGender.trim().isEmpty()) {
-	        patient.setGender(newGender);
+	    String newGender;
+	    while (true) {
+	        System.out.print("Insert new gender (M or F): ");
+	        newGender = r.readLine().trim().toUpperCase();
+	        if (newGender.isEmpty()) {
+	            break; // Keep current gender
+	        }
+	        if (newGender.equals("M") || newGender.equals("F")) {
+	            patient.setGender(newGender);
+	            break;
+	        } else {
+	            System.out.println("Invalid gender. Please enter 'M' or 'F'.");
+	        }
 	    }
 	    //We will not modify the organFailure because as the patient is added by the doctor the damaged organ cannot be changed
 	    //We will not modify the email
