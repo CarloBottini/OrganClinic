@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Patient gender="M">
-    <name>Abraham Mateo</name>
-    <dob>1995-10-21</dob>
-    <organFailure>Heart</organFailure>
-    <email>lincon@gmail.com</email>
-    <telephone>172837465</telephone>
-    <bloodType>Negative_B</bloodType>
+    <name>Aitor Menta</name>
+    <dob>2002-11-01</dob>
+    <organFailure>Kidney</organFailure>
+    <email>stormbreaker@gmail.com</email>
+    <telephone>273485960</telephone>
+    <bloodType>Positive_A</bloodType>
 </Patient>
