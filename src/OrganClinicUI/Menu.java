@@ -30,7 +30,6 @@ public class Menu {
 		connectionManager= new JDBCManager();
 		userManager= new JPAUserManager();
 		doctorMan = new JDBCDoctorManager(connectionManager);
-		
 		userManager.connect();
 		int variableWhileInitial=1;
 
