@@ -165,6 +165,34 @@ private JDBCManager manager;
 		    }
 		    return operation;
 		}
+	  	@Override
+	  	public List<Operation> getAllOperations() {
+	  	    List<Operation> operations = new ArrayList<>();
+	  	    try {
+	  	        String sql = "SELECT * FROM Operation";
+	  	        PreparedStatement prep = manager.getConnection().prepareStatement(sql);
+	  	        ResultSet rs = prep.executeQuery();
+
+	  	        while (rs.next()) {
+	  	            Integer id = rs.getInt("id");
+	  	            Boolean isDone = rs.getBoolean("isDone");
+	  	            Date date = Date.valueOf(rs.getString("date"));
+	  	            Integer patient_id = rs.getInt("patient_id");
+	  	            Integer treatment_id = rs.getInt("treatment_id");
+	  	            Integer doctor_id = rs.getInt("doctor_id");
+
+	  	            Operation operation = new Operation(id, isDone, date, patient_id, treatment_id, doctor_id);
+	  	            operations.add(operation);
+	  	        }
+	  	        rs.close();
+	  	        prep.close();
+	  	    } catch (Exception e) {
+	  	        System.out.println("Error in the database while getting all operations");
+	  	        e.printStackTrace();
+	  	    }
+	  	    return operations;
+	  	}
+
 	
 	
 }

@@ -31,7 +31,16 @@ public class JDBCDoctorManager implements DoctorManager{
 			while(rs.next()){
 				Integer id = rs.getInt("id");
 				String name= rs.getString("name");
-				Date dob= rs.getDate("dob");
+				String dobStr = rs.getString("dob");
+				Date dob = null;
+				if (dobStr != null && !dobStr.trim().isEmpty()) {
+				    try {
+				        dob = Date.valueOf(dobStr); // yyyy-MM-dd
+				    } catch (IllegalArgumentException e) {
+				        System.out.println("Invalid date format for doctor DOB: " + dobStr);
+				    }
+				}
+
 				String gender = rs.getString("gender");
 				String email = rs.getString("email");
 				Integer telephone = rs.getInt("telephone");
@@ -67,20 +76,26 @@ public class JDBCDoctorManager implements DoctorManager{
 	
 	@Override
 	public Doctor getDoctorByID(Integer id) {
-		String sql = "SELECT * FROM Doctor WHERE id = ?";
+	    String sql = "SELECT * FROM Doctor WHERE id = ?";
 	    try (PreparedStatement prep = manager.getConnection().prepareStatement(sql)) {
 	        prep.setInt(1, id);
 	        try (ResultSet rs = prep.executeQuery()) {
 	            if (rs.next()) {
-	                Doctor doc = new Doctor(
-	                    rs.getInt("id"),
-	                    rs.getString("name"),
-	                    rs.getDate("dob"),
-	                    rs.getString("gender"),
-	                    rs.getString("email"),
-	                    rs.getInt("telephone")
-	                );
-	                return doc;
+	                int docId = rs.getInt("id");
+	                String name = rs.getString("name");
+	                String dobStr = rs.getString("dob");
+	                Date dob = null;
+	                if (dobStr != null && !dobStr.trim().isEmpty()) {
+	                    try {
+	                        dob = Date.valueOf(dobStr); //yyyy-MM-dd
+	                    } catch (IllegalArgumentException e) {
+	                        System.out.println("Invalid date format found for doctor ID " + id + ": " + dobStr);
+	                    }
+	                }
+	                String gender = rs.getString("gender");
+	                String email = rs.getString("email");
+	                int telephone = rs.getInt("telephone");
+	                return new Doctor(docId, name, dob, gender, email, telephone);
 	            } else {
 	                System.out.println("No doctor found with ID: " + id);
 	            }
@@ -91,6 +106,7 @@ public class JDBCDoctorManager implements DoctorManager{
 	    }
 	    return null;
 	}
+
 	
 	@Override
 	public Doctor getDoctorByEmail(String email) {

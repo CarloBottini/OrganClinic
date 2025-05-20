@@ -396,6 +396,11 @@ public class MenuDoctor {
 	private static void assignNurseToOperation() throws NumberFormatException, IOException {
         System.out.println("Insert the ID of the nurse:");
         int nurseId = Integer.parseInt(r.readLine());
+        System.out.println("Showing all operations: ");
+        List<Operation> operations = operationMan.getAllOperations(); // << Llama al nuevo método
+        for (Operation op : operations) {
+            System.out.println(op);
+        }
         System.out.println("Insert the ID of the Operation to be add the nurse:");
         int operationId = Integer.parseInt(r.readLine());
         operationMan.assignedNurseToOperation(nurseId, operationId);
@@ -403,6 +408,15 @@ public class MenuDoctor {
 	}
 	
 	private static void unassignedNurseToOperation() throws NumberFormatException, IOException {
+		List<Operation> allOperations = operationMan.getAllOperations(); 
+	    if (allOperations.isEmpty()) {
+	        System.out.println("There are no operations registered in the system.");
+	        return;
+	    }	    
+	    System.out.println("These are all the operations in the system:");
+	    for (Operation op : allOperations) {
+	        System.out.println(op);
+	    }
 		System.out.print("Enter the Nurse ID to remove: ");
 	    int nurseId = Integer.parseInt(r.readLine());
 	    System.out.print("Enter the Operation ID: ");
@@ -423,6 +437,10 @@ public class MenuDoctor {
 	    int patientId = Integer.parseInt(r.readLine());
 	    System.out.print("Enter treatment ID: ");
 	    Integer treatmentId = Integer.parseInt(r.readLine());
+	    
+	    System.out.print("Enter organ ID: ");
+	    Integer organID = Integer.parseInt(r.readLine());
+	    
 		System.out.print("Showimg all the doctors: ......");
 	    List<Doctor> doctors = doctorMan.getAllDoctors();
 		for (Doctor d : doctors) {
@@ -434,7 +452,8 @@ public class MenuDoctor {
 	    Date today = new Date(System.currentTimeMillis());
 	    boolean isDone = !date.after(today);	//if the date is future the operation is not done	    
 
-	    Operation operation = new Operation(null, isDone, date, patientId, treatmentId, doctorId, null);
+	    Operation operation = new Operation(isDone, date, patientId, treatmentId, doctorId,null);
+	    
 	    operationMan.scheduleOperation(operation);
 	    System.out.println("Operation scheduled.");
 	}

@@ -18,6 +18,20 @@ public class Operation implements Serializable{
 	private Integer doctor_id;
 	private List<Nurse> listNurse = new ArrayList<>();
 	
+	
+	
+	public Operation(Boolean isDone, Date date, Integer patient_id, Integer treatment_id, Integer doctor_id,List<Nurse> listNurse) {
+		super();
+		this.isDone = isDone;
+		this.date = date;
+		this.patient_id = patient_id;
+		this.treatment_id = treatment_id;
+		this.doctor_id = doctor_id;
+		this.listNurse = listNurse;
+	}
+
+
+
 	public Operation(Integer id, Boolean isDone, Date date, Integer patient_id, Integer treatment_id, Integer doctor_id, List<Nurse> listNurse) {
 		super();
 		this.id = id;

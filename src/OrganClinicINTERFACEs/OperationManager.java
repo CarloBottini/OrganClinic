@@ -12,4 +12,5 @@ public interface OperationManager {
 	public void unassignedNurseToOperation(Integer nurse_id, Integer operation_id);
 	public List<Operation> getOperationsByPatientId(Integer patientID);
 	public Operation getOperationByID(Integer operationId);
+	public List<Operation> getAllOperations();
 }
