@@ -26,7 +26,7 @@ private JDBCManager manager;
 		try {//it is not necessary to put the id, because it is autoincremented
 			String sql = "INSERT INTO Operation (isDone, date, patient_id, treatment_id, doctor_id) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prep = manager.getConnection().prepareStatement(sql);
-			prep.setBoolean(1, operation.getIsDone());
+	        prep.setInt(1, operation.getIsDone() ? 1 : 0); //1 or 0		
 			prep.setString(2, operation.getDate().toString()); //doing the conversion
 			prep.setInt(3, operation.getPatient_id());
 			prep.setInt(4, operation.getTreatment_id());
@@ -46,7 +46,7 @@ private JDBCManager manager;
 		try {
 			String query = "UPDATE Operation SET isDone= ?, date= ?, patient_id= ?, treatment_id= ?, doctor_id= ? WHERE id=?";
 			PreparedStatement prep = manager.getConnection().prepareStatement(query);
-			prep.setBoolean(1,operation.getIsDone());
+	        prep.setInt(1, operation.getIsDone() ? 1 : 0); 
 			prep.setString(2, operation.getDate().toString()); //doing the conversion
 			prep.setInt(3,operation.getPatient_id());
 			prep.setInt(4,operation.getTreatment_id());
@@ -73,8 +73,8 @@ private JDBCManager manager;
 				assignPrep.setInt(2, operation_id);
 				assignPrep.executeUpdate();
 				assignPrep.close();
-			//UPDATE nurse availability	
-				String updateAvailability = "UPDATE Nurse SET availability = false WHERE id = ?";
+			//UPDATE nurse availability	0 equals false
+				String updateAvailability = "UPDATE Nurse SET availability = 0 WHERE id = ?";
 		        PreparedStatement availPrep = manager.getConnection().prepareStatement(updateAvailability);
 		        availPrep.setInt(1, nurse_id);
 		        availPrep.executeUpdate();
@@ -100,7 +100,7 @@ private JDBCManager manager;
 		        deletePrep.executeUpdate();
 		        deletePrep.close();
 		        
-		        String updateAvailability = "UPDATE Nurse SET availability = true WHERE id = ?";
+		        String updateAvailability = "UPDATE Nurse SET availability = 1 WHERE id = ?";
 		        PreparedStatement availPrep = manager.getConnection().prepareStatement(updateAvailability);
 		        availPrep.setInt(1, nurse_id);
 		        availPrep.executeUpdate();

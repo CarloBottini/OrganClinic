@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Patient gender="M">
-    <name>Aitor Menta</name>
-    <dob>2002-11-01</dob>
-    <organFailure>Kidney</organFailure>
-    <email>stormbreaker@gmail.com</email>
-    <telephone>273485960</telephone>
-    <bloodType>Positive_A</bloodType>
+    <name>Freddy Mercury</name>
+    <dob>1990-08-11</dob>
+    <organFailure>Pancreas</organFailure>
+    <email>Venus@gmail.com</email>
+    <telephone>909876543</telephone>
+    <bloodType>Positive_AB</bloodType>
 </Patient>
