@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.util.List;
 
+import OrganClinicINTERFACEs.OperationManager;
 import OrganClinicINTERFACEs.PatientManager;
 import OrganClinicJDBC.JDBCManager;
+import OrganClinicJDBC.JDBCOperationManager;
 import OrganClinicJDBC.JDBCPatientManager;
 import OrganClinicPOJOs.Patient;
 import OrganClinicPOJOs.Doctor;
@@ -23,6 +26,7 @@ public class MenuPatient {
 
 	
 	private static PatientManager patientMan;
+	private static OperationManager operationMan;
 	private static JDBCManager connectionManager;
 	
 
@@ -30,6 +34,7 @@ public class MenuPatient {
 	public static void menuPatient(String email) throws NumberFormatException, IOException {
 		connectionManager= new JDBCManager();
 		patientMan = new JDBCPatientManager(connectionManager);
+		operationMan = new JDBCOperationManager(connectionManager);
 		
 		System.out.println("Welcome patient! Insert the option: ");
 		int variableWhilePatient=1;
@@ -73,6 +78,17 @@ public class MenuPatient {
 		Patient patientToPrint= patientMan.getPatientByID(patientId);
 		System.out.println("Your profile is:");
 		System.out.println(patientToPrint.toString());
+		
+		List<Operation> operations = operationMan.getOperationsByPatientId(patientId);
+	    if (operations.isEmpty()) {
+	        System.out.println("No operations assigned.");
+	    } else {
+	        System.out.println("Your assigned operations:");
+	        for (Operation operation : operations) {
+	            System.out.println(operation.toString());
+	        }
+	    }
+		
 	}
 	
 	
