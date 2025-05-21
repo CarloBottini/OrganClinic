@@ -12,6 +12,7 @@ import OrganClinicINTERFACEs.UserManager;
 import OrganClinicJDBC.*;
 import OrganClinicJPA.JPAUserManager;
 import OrganClinicPOJOs.Doctor;
+import OrganClinicPOJOs.Patient;
 import OrganClinicPOJOs.Role;
 import OrganClinicPOJOs.User;
 
@@ -20,7 +21,7 @@ public class Menu {
 	private static JDBCManager connectionManager;
 
 	private static JDBCManager jdbcManager;
-	private static PatientManager patientManager;
+	private static PatientManager patientMan;
 	private static DoctorManager doctorMan;
 	private static UserManager userManager;
 	private static BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
@@ -30,6 +31,7 @@ public class Menu {
 		connectionManager= new JDBCManager();
 		userManager= new JPAUserManager();
 		doctorMan = new JDBCDoctorManager(connectionManager);
+		patientMan=new JDBCPatientManager(connectionManager);
 		userManager.connect();
 		int variableWhileInitial=1;
 
@@ -105,6 +107,17 @@ public class Menu {
 			md.update(password.getBytes());
 			byte[]digest= md.digest();
 			
+			Patient existingPatient = patientMan.getPatientByEmail(email);
+            if (existingPatient != null) {
+                System.out.println("This User is alreaady registered");
+                return;
+            }		
+            Doctor existingDoctor= doctorMan.getDoctorByEmail(email);
+            if(existingDoctor!= null) {
+                System.out.println("This User is already registered");
+                return;
+            }
+            
 			System.out.println("choose one role by inserting the ID number: ");
 			//role 1 =patient role 2= doctor
 			List<Role> roles= userManager.getRoles();
@@ -113,7 +126,7 @@ public class Menu {
 			Role r= userManager.getRole(roleID);
 			User u = new User(email,digest, r);
 			userManager.newUser(u);	
-			//For the patient no because is the doctor who adds the patient
+			
 			if (roleID == 2) { //when is doctor
 				System.out.println("DOCTOR NAME: ");
 	            String name = reader.readLine();
@@ -134,8 +147,70 @@ public class Menu {
 
 	            Doctor doctor = new Doctor(name, dob, gender, email, telephone);
 	            doctorMan.addDoctor(doctor);
-			}
+	            
+			}else if (roleID == 1) { //patients
+               
+                    System.out.println("PATIENT NAME: ");
+                    String name = reader.readLine();
+                    System.out.println("PATIENT DATE OF BIRTH (yyyy-mm-dd): ");
+                    String dobStr = reader.readLine();
+                    Date dob;
+                    try {
+                        dob = Date.valueOf(dobStr);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid format. Use:  yyyy-mm-dd.");
+                        return;
+                    }
+                    String gender;
+                    while (true) {
+                        System.out.println("PATIENT GENDER (M for male or F for female): ");
+                        gender = reader.readLine().trim().toUpperCase();
+                        if (gender.equals("M") || gender.equals("F"))
+                            break;
+                        System.out.println("Invalid input, insert M or F ");
+                    }
+
+                    System.out.println("PATIENT ORGAN FAILURE (Brain, Kidney, Lung, Heart, Pancreas, Liver): ");
+                    String organFailure = reader.readLine();
+
+                    System.out.println("PATIENT TELEPHONE (numbers only): ");
+                    int telephone;
+                    try {
+                        telephone = Integer.parseInt(reader.readLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Telephone invlaid number.");
+                        return;
+                    }
+                    String[] bloodTypes = { "Positive_B", "Positive_AB", "Positive_A", "Positive_0",
+                            "Negative_B", "Negative_AB", "Negative_A", "Negative_0" };
+
+                    System.out.println("Select Blood Type:");
+                    for (int i = 0; i < bloodTypes.length; i++) {
+                        System.out.println((i + 1) + ". " + bloodTypes[i]);
+                    }
+                    String bloodType = "";
+                    while (true) {
+                        System.out.print("Enter option (1-8): ");
+                        try {
+                            int choice = Integer.parseInt(reader.readLine());
+                            if (choice >= 1 && choice <= bloodTypes.length) {
+                                bloodType = bloodTypes[choice - 1];
+                                break;
+                            } else {
+                                System.out.println("Insert a number between 1 and " + bloodTypes.length + ".");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid Input. Please insert a number: ");
+                        }
+                    }
 			
+                    Patient newPatient = new Patient(name, dob, gender, organFailure, email, telephone, bloodType);
+                    patientMan.addPatient(newPatient);
+                    System.out.println("Patient registered correctly");
+                
+            } else {
+                System.out.println("Invalid role");
+            }
 			
 		}catch(Exception e) {
 			e.printStackTrace();

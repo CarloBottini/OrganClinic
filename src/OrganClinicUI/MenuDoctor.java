@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
@@ -38,7 +40,9 @@ import OrganClinicPOJOs.Nurse;
 import OrganClinicPOJOs.Operation;
 import OrganClinicPOJOs.Organ;
 import OrganClinicPOJOs.Patient;
+import OrganClinicPOJOs.Role;
 import OrganClinicPOJOs.Treatment;
+import OrganClinicPOJOs.User;
 import OrganClinicXML.XMLManagerImpl;
 
 public class MenuDoctor {
@@ -55,6 +59,8 @@ public class MenuDoctor {
 	private static CompatibleManager compatibleMan;
 	private static UserManager userMan;
 	private static XMLManager xmlMan;
+	private static UserManager userManager;
+
 
 	public static void menuDoctor(String email) throws NumberFormatException, IOException {
 		connectionManager= new JDBCManager();
@@ -67,6 +73,8 @@ public class MenuDoctor {
 		compatibleMan= new JDBCCompatibleManager(connectionManager);
 		userMan= new JPAUserManager();
 		xmlMan= new XMLManagerImpl();
+		userManager= new JPAUserManager();
+
 		
 		System.out.println("Welcome Doctor! We are thrilled with your excellent work! ");
 		int whileDoctorVariable=1;
@@ -228,8 +236,24 @@ public class MenuDoctor {
 		}		
 	}
 	
-	private static void addPatient() throws IOException {
+	private static void addPatient() throws IOException, Exception {
 		System.out.println("Please, add the following patient's information.");
+		System.out.print("Patient EMAIL: ");
+        String email = r.readLine();
+        Patient existingPatient = patientMan.getPatientByEmail(email);
+        if (existingPatient != null) {
+            System.out.println("The patient with the mail: " + email + " is already registered.");
+            return;
+        }
+        System.out.print("Patient PASSWORD: ");
+        String password = r.readLine();
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        Role patientRole = userManager.getRole(1); // role 1 = paciente
+        User newUser = new User(email, digest, patientRole);
+        userManager.newUser(newUser);
+        
 		System.out.println("Patient NAME: ");
 		String name = r.readLine();
 		System.out.print("Patient Date Of Birth (yyyy-mm-dd): ");
@@ -251,10 +275,14 @@ public class MenuDoctor {
 	            System.out.println("Invalid input. Please enter 'M' or 'F'.");
 	        }
 	    }
-	    System.out.print("Organ failure: ");
+	    System.out.print("Organ failure (Brain, Lung, Liver, Kidney, Heart: ");
 	    String organFailure = r.readLine();
+	    
+	    /*
 	    System.out.print("Email: ");
 	    String email = r.readLine();
+	    */
+	    
 	    System.out.print("Telephone: ");
 	    int telephone;
 	    try {
@@ -263,10 +291,7 @@ public class MenuDoctor {
 	        System.out.println("Invalid telephone number.");
 	        return;
 	    }
-	    String[] bloodTypes = {
-	            "Positive_B", "Positive_AB", "Positive_A", "Positive_0",
-	            "Negative_B", "Negative_AB", "Negative_A", "Negative_0"
-	        };
+	    String[] bloodTypes = {"Positive_B", "Positive_AB", "Positive_A", "Positive_0", "Negative_B","Negative_AB", "Negative_A","Negative_0"};
 
 	        System.out.println("Select Blood Type:");
 	        for (int i = 0; i < bloodTypes.length; i++) {
@@ -427,20 +452,47 @@ public class MenuDoctor {
 	
 	private static void scheduleOperation() throws IOException {
 		System.out.print("Enter operation date (yyyy-mm-dd): ");
-	    Date date = Date.valueOf(r.readLine());
+		Date date;
+	    try {
+	        date = Date.valueOf(r.readLine());
+	    } catch (IllegalArgumentException e) {
+	        System.out.println("Invalid date format. Use yyyy-mm-dd.");
+	        return;
+	    }
 		System.out.print("Showimg all the patients: ......");
 		List<Patient> patients = patientMan.getAllPatients();
 	    for (Patient p : patients) {
 	        System.out.println(p); // usa el toString() completo
 	    }
 		System.out.print("Enter patient ID: ");
-	    int patientId = Integer.parseInt(r.readLine());
+		int patientId;
+	    try {
+	        patientId = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid patient ID.");
+	        return;
+	    }
+	    System.out.println("Showing all treatments:");
+	    List<Treatment> treatments = treatmentMan.getAllTreatment(); 
+	    for (Treatment t : treatments) {
+	        System.out.println(t);
+	    }	    
 	    System.out.print("Enter treatment ID: ");
-	    Integer treatmentId = Integer.parseInt(r.readLine());
-	    
+	    int treatmentId;
+	    try {
+	        treatmentId = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid treatment ID.");
+	        return;
+	    }	   
+	    System.out.println("Showing all organs:");
+	    List<Organ> organs = organMan.getAllOrgans(); 
+	    for (Organ o : organs) {
+	        System.out.println(o);
+	    }	   	    
 	    System.out.print("Enter organ ID: ");
 	    Integer organID = Integer.parseInt(r.readLine());
-	    
+	    	    
 		System.out.print("Showimg all the doctors: ......");
 	    List<Doctor> doctors = doctorMan.getAllDoctors();
 		for (Doctor d : doctors) {
@@ -449,12 +501,38 @@ public class MenuDoctor {
 	    //so the doctor can select himself or another doctor
 	    System.out.print("Enter doctor ID: ");
 	    Integer doctorId = Integer.parseInt(r.readLine());
+	    
+	    System.out.println("Showing all available nurses:");
+	    List<Nurse> nurses = nurseMan.getAvailableNurses(); 
+	    for (Nurse n : nurses) {
+	        System.out.println(n);
+	    }
+	    System.out.print("Enter nurse ID to assign: ");
+	    int nurseId;
+	    try {
+	        nurseId = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid nurse ID.");
+	        return;
+	    }
+	   	    
+	 	    
 	    Date today = new Date(System.currentTimeMillis());
 	    boolean isDone = !date.after(today);	//if the date is future the operation is not done	    
 
 	    Operation operation = new Operation(isDone, date, patientId, treatmentId, doctorId,null);
 	    
 	    operationMan.scheduleOperation(operation);
+	    int operationId = operation.getId();
+	    operationMan.assignedNurseToOperation(nurseId, operationId);
+	    
+	    Nurse nurse = nurseMan.getNurseByID(nurseId);
+	    if (nurse != null) {
+	        operation.getListNurse().add(nurse);
+	    } else {
+	        System.out.println("Error: Nurse not found with the provided ID.");
+	        return;
+	    }
 	    System.out.println("Operation scheduled.");
 	}
 	
@@ -486,6 +564,8 @@ public class MenuDoctor {
 	        return;
 	    }
 	    System.out.println("Operation information : " + operationToReschedule);
+	   
+	    
 	    System.out.print("Enter the new operation's date (yyyy-mm-dd): ");
 	    String newDateString = r.readLine();
 	    Date newDate = Date.valueOf(newDateString);
@@ -496,6 +576,58 @@ public class MenuDoctor {
 	    operationToReschedule.setDate(newDate);
 	    operationMan.rescheduleOperation(operationToReschedule);
 	    System.out.println("Operation rescheduled successfully.");
+	    System.out.print("Do you want to assign additional nurses to this operation? (Y for yes/N for no): ");
+	    String addNurseResponse = r.readLine();
+	    while (addNurseResponse.equalsIgnoreCase("Y")) {
+	        System.out.println("Showing all available nurses:");
+	        List<Nurse> availableNurses = nurseMan.getAvailableNurses();
+	        for (Nurse n : availableNurses) {
+	            System.out.println(n);
+	        }
+	        System.out.print("Enter nurse ID to assign: ");
+	        int nurseId = Integer.parseInt(r.readLine());
+	        operationMan.assignedNurseToOperation(nurseId, operationId);
+	        Nurse nurse = nurseMan.getNurseByID(nurseId);
+	        if (nurse != null) {
+	            operationToReschedule.getListNurse().add(nurse);
+	        }
+	        System.out.print("Do you want to assign another nurse? (Y for yes /N for no): ");
+	        addNurseResponse = r.readLine();
+	    }
+	    System.out.print("Do you want to UNASSIGN a nurse from this operation? (Y for yes/N for no): ");
+	    String unassignResponse = r.readLine();
+	    while (unassignResponse.equalsIgnoreCase("Y")) {
+	        if (operationToReschedule.getListNurse().isEmpty()) {
+	            System.out.println("No nurses are currently assigned to this operation.");
+	            break;
+	        }
+	        System.out.println("Nurses assigned to this operation:");
+	        for (Nurse n : operationToReschedule.getListNurse()) {
+	            System.out.println(n);
+	        }
+	        System.out.print("Enter nurse ID to unassign: ");
+	        int nurseIdToRemove = Integer.parseInt(r.readLine());
+	        operationMan.unassignedNurseToOperation(nurseIdToRemove, operationId);
+	        Nurse nurseToRemove = nurseMan.getNurseByID(nurseIdToRemove);
+	        operationToReschedule.getListNurse().remove(nurseToRemove);
+	        System.out.print("Do you want to unassign another nurse? (Y for yes/N for no): ");
+	        unassignResponse = r.readLine();
+	    } 
+	        System.out.print("Do you want to change the doctor for this operation? (Y for yes/N for no): ");
+	        String changeDoctorResponse = r.readLine();
+	        if (changeDoctorResponse.equalsIgnoreCase("Y")) {
+	            System.out.println("Showing all doctors:");
+	            List<Doctor> doctors = doctorMan.getAllDoctors();
+	            for (Doctor d : doctors) {
+	                System.out.println(d);
+	            }
+	            System.out.print("Enter the new doctor ID: ");
+	            int newDoctorId = Integer.parseInt(r.readLine());
+	            operationToReschedule.setDoctor_id(newDoctorId);
+	            operationMan.rescheduleOperation(operationToReschedule);
+	            System.out.println("Doctor updated successfully.");
+	        }
+	    
 	    
 	}
 	
@@ -600,7 +732,7 @@ public class MenuDoctor {
 	}
 	
 	private static boolean isBloodCompatible(String patientBloodType, String organBloodType) {
-	    //each blood type and his posible donors in a set
+	    //each blood type and his possible donors in a set
 	    Map<String, Set<String>> compatibilityMap = Map.of(
 	        "Negative_0", Set.of("Negative_0"),
 	        "Positive_0", Set.of("Negative_0", "Positive_0"),

@@ -4,7 +4,6 @@ import java.util.List;
 
 import OrganClinicPOJOs.Patient;
 
-//TODO put @override in every method
 
 public interface PatientManager {
 	public void addPatient(Patient p);
