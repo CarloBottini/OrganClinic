@@ -582,6 +582,7 @@ public class MenuDoctor {
 	        System.out.println("You can only reschedule to a future date.");
 	        return;
 	    }
+	    
 	    operationToReschedule.setDate(newDate);
 	    operationMan.rescheduleOperation(operationToReschedule);
 	    System.out.println("Operation rescheduled successfully.");
