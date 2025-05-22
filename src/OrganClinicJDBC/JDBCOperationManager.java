@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import OrganClinicINTERFACEs.OperationManager;
+import OrganClinicPOJOs.Nurse;
 import OrganClinicPOJOs.Operation;
 import OrganClinicPOJOs.Organ;
 import OrganClinicPOJOs.Patient;
@@ -33,6 +34,13 @@ private JDBCManager manager;
 			prep.setInt(5, operation.getDoctor_id());
 			
 			prep.executeUpdate();
+			
+			ResultSet rs = prep.getGeneratedKeys();
+	        if (rs.next()) {
+	            operation.setId(rs.getInt(1));  
+	        }
+	        rs.close();
+	        
 			prep.close();
 		}catch(Exception e){
 			System.out.println("Error in the database while scheduling an operation");
@@ -192,6 +200,33 @@ private JDBCManager manager;
 	  	    }
 	  	    return operations;
 	  	}
+	  	
+	  	@Override
+	  	public List<Nurse> getNursesByOperationId(Integer operationId) {
+	  	    List<Nurse> nurses = new ArrayList<>();
+	  	    try {
+	  	        String sql = "SELECT n.id, n.name, n.availability " +
+	  	                     "FROM Nurse n INNER JOIN Has h ON n.id = h.nurse_id " +
+	  	                     "WHERE h.operation_id = ?";
+	  	        PreparedStatement stmt = manager.getConnection().prepareStatement(sql);
+	  	        stmt.setInt(1, operationId);
+	  	        ResultSet rs = stmt.executeQuery();
+	  	        while (rs.next()) {
+	  	            int id = rs.getInt("id");
+	  	            String name = rs.getString("name");
+	  	            boolean availability = rs.getBoolean("availability");
+	  	            Nurse nurse = new Nurse(id, name, availability);
+	  	            nurses.add(nurse);
+	  	        }
+	  	        rs.close();
+	  	        stmt.close();
+	  	    } catch (Exception e) {
+	  	        System.out.println("Error retrieving nurses for operation " + operationId);
+	  	        e.printStackTrace();
+	  	    }
+	  	    return nurses;
+	  	}
+
 
 	
 	

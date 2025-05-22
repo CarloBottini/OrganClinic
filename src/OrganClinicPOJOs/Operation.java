@@ -27,8 +27,7 @@ public class Operation implements Serializable{
 		this.patient_id = patient_id;
 		this.treatment_id = treatment_id;
 		this.doctor_id = doctor_id;
-		this.listNurse = listNurse;
-	}
+        this.listNurse = (listNurse != null) ? listNurse : new ArrayList<>();	}
 
 
 
@@ -40,8 +39,7 @@ public class Operation implements Serializable{
 		this.patient_id = patient_id;
 		this.treatment_id = treatment_id;
 		this.doctor_id = doctor_id;
-		this.listNurse = listNurse;
-	}
+        this.listNurse = (listNurse != null) ? listNurse : new ArrayList<>();	}
 	
 
 
@@ -110,8 +108,8 @@ public class Operation implements Serializable{
 	}
 
 	public void setListNurse(List<Nurse> listNurse) {
-		this.listNurse = listNurse;
-	}
+        this.listNurse = (listNurse != null) ? listNurse : new ArrayList<>();
+    }
 
 	@Override
 	public int hashCode() {

@@ -2,6 +2,7 @@ package OrganClinicINTERFACEs;
 
 import java.util.List;
 
+import OrganClinicPOJOs.Nurse;
 import OrganClinicPOJOs.Operation;
 
 public interface OperationManager {
@@ -13,4 +14,5 @@ public interface OperationManager {
 	public List<Operation> getOperationsByPatientId(Integer patientID);
 	public Operation getOperationByID(Integer operationId);
 	public List<Operation> getAllOperations();
+	public List<Nurse> getNursesByOperationId(Integer operationId);
 }

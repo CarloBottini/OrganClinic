@@ -72,7 +72,7 @@ public class Menu {
 			}
 		}
 	}
-	private static void login() {
+	private static void login() throws Exception {
 		try {
 			System.out.println("Introduce email: ");
 			String email= reader.readLine();

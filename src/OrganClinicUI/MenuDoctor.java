@@ -62,7 +62,7 @@ public class MenuDoctor {
 	private static UserManager userManager;
 
 
-	public static void menuDoctor(String email) throws NumberFormatException, IOException {
+	public static void menuDoctor(String email) throws Exception {
 		connectionManager= new JDBCManager();
 		doctorMan = new JDBCDoctorManager(connectionManager);
 		patientMan= new JDBCPatientManager(connectionManager);
@@ -523,6 +523,7 @@ public class MenuDoctor {
 	    Operation operation = new Operation(isDone, date, patientId, treatmentId, doctorId,null);
 	    
 	    operationMan.scheduleOperation(operation);
+	    
 	    int operationId = operation.getId();
 	    operationMan.assignedNurseToOperation(nurseId, operationId);
 	    
@@ -564,7 +565,15 @@ public class MenuDoctor {
 	        return;
 	    }
 	    System.out.println("Operation information : " + operationToReschedule);
-	   
+	    List<Nurse> assignedNurses = operationMan.getNursesByOperationId(operationId);
+	    if (assignedNurses.isEmpty()) {
+	        System.out.println("No nurses are assigned to this operation.");
+	    } else {
+	        System.out.println("Nurses assigned to operation " + operationId + ":");
+	        for (Nurse nurse : assignedNurses) {
+	            System.out.println(nurse);
+	        }
+	    }
 	    
 	    System.out.print("Enter the new operation's date (yyyy-mm-dd): ");
 	    String newDateString = r.readLine();
@@ -587,29 +596,35 @@ public class MenuDoctor {
 	        System.out.print("Enter nurse ID to assign: ");
 	        int nurseId = Integer.parseInt(r.readLine());
 	        operationMan.assignedNurseToOperation(nurseId, operationId);
-	        Nurse nurse = nurseMan.getNurseByID(nurseId);
+	        
+	        /*Nurse nurse = nurseMan.getNurseByID(nurseId);
 	        if (nurse != null) {
 	            operationToReschedule.getListNurse().add(nurse);
 	        }
+	        */
 	        System.out.print("Do you want to assign another nurse? (Y for yes /N for no): ");
 	        addNurseResponse = r.readLine();
 	    }
 	    System.out.print("Do you want to UNASSIGN a nurse from this operation? (Y for yes/N for no): ");
 	    String unassignResponse = r.readLine();
 	    while (unassignResponse.equalsIgnoreCase("Y")) {
-	        if (operationToReschedule.getListNurse().isEmpty()) {
+	    	
+	    	List<Nurse> nursesAssigned = operationMan.getNursesByOperationId(operationId);
+	        if (nursesAssigned.isEmpty()) {
 	            System.out.println("No nurses are currently assigned to this operation.");
 	            break;
 	        }
 	        System.out.println("Nurses assigned to this operation:");
-	        for (Nurse n : operationToReschedule.getListNurse()) {
+	        for (Nurse n : nursesAssigned) {
 	            System.out.println(n);
 	        }
 	        System.out.print("Enter nurse ID to unassign: ");
 	        int nurseIdToRemove = Integer.parseInt(r.readLine());
 	        operationMan.unassignedNurseToOperation(nurseIdToRemove, operationId);
-	        Nurse nurseToRemove = nurseMan.getNurseByID(nurseIdToRemove);
-	        operationToReschedule.getListNurse().remove(nurseToRemove);
+	       
+	        
+	        /*Nurse nurseToRemove = nurseMan.getNurseByID(nurseIdToRemove);
+	        operationToReschedule.getListNurse().remove(nurseToRemove);*/
 	        System.out.print("Do you want to unassign another nurse? (Y for yes/N for no): ");
 	        unassignResponse = r.readLine();
 	    } 
