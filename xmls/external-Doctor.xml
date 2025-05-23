@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Doctor gender="F">
-    <name>elisa</name>
-    <dob>1980-01-01</dob>
-    <email>elisa@mail.com</email>
-    <telephone>33333</telephone>
+<Doctor gender="M">
+    <name>sofia</name>
+    <dob>2000-12-12</dob>
+    <email>sofia@mail.com</email>
+    <telephone>1234</telephone>
 </Doctor>

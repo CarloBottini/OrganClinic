@@ -136,7 +136,7 @@ public class JDBCDoctorManager implements DoctorManager{
 
 	            doc = new Doctor(id, name, dob, gender, emailResult, telephone);
 	        } else {
-	            System.out.println("No doctor found with that email.");
+	            //System.out.println("No doctor found with that email.");
 	        }
 
 	        rs.close();

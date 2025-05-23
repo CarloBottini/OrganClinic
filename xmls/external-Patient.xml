@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Patient gender="M">
-    <name>Giovanni Lo Celso</name>
-    <dob>1980-07-23</dob>
-    <organFailure>Kidney</organFailure>
-    <email>argentino123@hotmail.com</email>
-    <telephone>123456543</telephone>
-    <bloodType>Positive_0</bloodType>
+    <name>lola</name>
+    <dob>1800-01-01</dob>
+    <organFailure>Liver</organFailure>
+    <email>lola@mail.com</email>
+    <telephone>33333</telephone>
+    <bloodType>Positive_AB</bloodType>
 </Patient>

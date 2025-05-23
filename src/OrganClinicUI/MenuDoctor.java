@@ -484,15 +484,8 @@ public class MenuDoctor {
 	    } catch (NumberFormatException e) {
 	        System.out.println("Invalid treatment ID.");
 	        return;
-	    }	   
-	    System.out.println("Showing all organs:");
-	    List<Organ> organs = organMan.getAllOrgans(); 
-	    for (Organ o : organs) {
-	        System.out.println(o);
-	    }	   	    
-	    System.out.print("Enter organ ID: ");
-	    Integer organID = Integer.parseInt(r.readLine());
-	    	    
+	    }	
+	    	      
 		System.out.print("Showimg all the doctors: ......");
 	    List<Doctor> doctors = doctorMan.getAllDoctors();
 		for (Doctor d : doctors) {

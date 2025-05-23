@@ -56,6 +56,7 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
+	
 	public User() {
     }
 
@@ -109,6 +110,14 @@ public class User implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public byte[] getPassword() {
+		return password;
+	}
+
+	public void setPassword(byte[] password) {
+		this.password = password;
 	}
 	
 	
