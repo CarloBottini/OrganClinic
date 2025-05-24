@@ -46,6 +46,7 @@ public class JPAUserManager implements UserManager{
 			em.close();
 		}
 		
+		//create user
 		@Override
 		public void newUser(User u) {
 			// TODO Auto-generated method stub
@@ -53,7 +54,7 @@ public class JPAUserManager implements UserManager{
 			em.persist(u);
 			em.getTransaction().commit();
 		}
-		
+		//create role
 		@Override
 		public void newRole(Role r) {
 			// TODO Auto-generated method stub
@@ -62,7 +63,7 @@ public class JPAUserManager implements UserManager{
 			em.getTransaction().commit();
 			
 		}
-		
+		//read role
 		@Override
 		public Role getRole(Integer id) {
 			// TODO Auto-generated method stub
@@ -80,7 +81,7 @@ public class JPAUserManager implements UserManager{
 		
 			return roles;
 		}
-
+		//read user
 		@Override
 		public User getUser(String email) {
 			// TODO Auto-generated method stub
@@ -89,6 +90,7 @@ public class JPAUserManager implements UserManager{
 			
 			return u;
 		}
+		
 		@Override
 		public User checkPassword(String email,String pw) {
 			User u= null;
@@ -108,4 +110,59 @@ public class JPAUserManager implements UserManager{
 			}catch(NoResultException e) {}
 			return u;
 		}
+		//update user
+		@Override
+	    public void updateUser(User u) {
+	        em.getTransaction().begin();
+	        em.merge(u);
+	        em.getTransaction().commit();
+	    }
+		//update role
+		@Override
+	    public void updateRole(Role r) {
+	        em.getTransaction().begin();
+	        em.merge(r);
+	        em.getTransaction().commit();
+	    }
+		
+		public void updatePassword(Integer userId, String newPassword) {
+	        try {
+	            MessageDigest md = MessageDigest.getInstance("MD5");
+	            md.update(newPassword.getBytes());
+	            byte[] newDigest = md.digest();
+	            
+	            em.getTransaction().begin();
+	            User user = em.find(User.class, userId);
+	            if (user != null) {
+	                user.setPassword(newDigest);
+	            }
+	            em.getTransaction().commit();
+	        } catch (NoSuchAlgorithmException e) {
+	            e.printStackTrace();
+	        }
+	    }
+		
+		
+		//delete user
+		@Override
+	    public void deleteUser(User u) {
+	        em.getTransaction().begin();
+	        User managedUser = em.find(User.class, u.getId());
+	        if (managedUser != null) {
+	            em.remove(managedUser);
+	        }
+	        em.getTransaction().commit();
+	    }
+		
+		//delete role
+		@Override
+	    public void deleteRole(Role r) {
+	        em.getTransaction().begin();
+	        Role managedRole = em.find(Role.class, r.getId());
+	        if (managedRole != null) {
+	            em.remove(managedRole);
+	        }
+	        em.getTransaction().commit();
+	    }
+		
 }

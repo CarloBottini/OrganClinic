@@ -22,4 +22,12 @@ public interface UserManager {
 
 	User checkPassword(String email, String pw);
 
+	void updateUser(User u);
+
+	void updateRole(Role r);
+
+	void deleteUser(User u);
+
+	void deleteRole(Role r);
+
 }
