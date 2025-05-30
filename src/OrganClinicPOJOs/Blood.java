@@ -47,10 +47,6 @@ public class Blood implements Serializable{
 	public String toString() {
 		return "Blood [type=" + type + "]";
 	}
-	
-	
-	
-	
 }
 
 /*
